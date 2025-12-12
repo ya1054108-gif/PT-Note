@@ -1,331 +1,209 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>PT 國考全攻略資料庫</title>
-<style>
-:root{
-  --bg: #f8fafc; --sidebar-bg: #1e293b; --sidebar-text: #e2e8f0;
-  --card: #ffffff; --text: #334155; --border: #e2e8f0;
-  
-  /* Subject Colors */
-  --ortho: #3b82f6; --neuro: #8b5cf6; --cardio: #ef4444; --peds: #f97316;
-  --modality: #059669; --assistive: #db2777; --biomech: #4b5563;
-  
-  --radius: 12px; --header-h: 60px; --sidebar-w: 260px;
-}
+// =========================================
+  //   骨科特殊測試全集 (Orthopedic Special Tests)
+  // =========================================
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif; margin:0; background:var(--bg); color:var(--text); height:100vh; overflow:hidden;}
-
-/* --- Layout --- */
-.app-container{display:flex; height:100vh;}
-.main{flex:1; display:flex; flex-direction:column; background:var(--bg); overflow:hidden; position:relative;}
-.content-area{flex:1; overflow-y:auto; padding:20px; scroll-behavior:smooth;}
-
-/* --- Sidebar --- */
-.sidebar{
-  width:var(--sidebar-w); background:var(--sidebar-bg); color:var(--sidebar-text);
-  display:flex; flex-direction:column; flex-shrink:0; transition: transform 0.3s ease;
-  z-index: 50;
-}
-.sidebar-header{padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); font-weight:800; font-size:18px; color:#fff;}
-.nav-scroll{overflow-y:auto; flex:1; padding:10px 0;}
-.nav-item{padding:12px 20px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; transition:0.2s; border-left:3px solid transparent; color:rgba(255,255,255,0.7);}
-.nav-item:hover{background:rgba(255,255,255,0.05); color:#fff;}
-.nav-item.active{background:rgba(255,255,255,0.1); color:#fff;}
-
-/* --- Mobile Toggle --- */
-.menu-overlay{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:40; display:none;}
-.header-bar{
-  display:none; height:var(--header-h); background:#fff; align-items:center; padding:0 16px; 
-  border-bottom:1px solid #eee; position:sticky; top:0; z-index:30;
-}
-.menu-btn{cursor:pointer; font-size:20px; padding:5px;}
-
-/* --- Views: Home Grid --- */
-.home-container{max-width:900px; margin:0 auto; width:100%;}
-.hero-title{font-size:24px; font-weight:800; margin-bottom:20px; text-align:center; color:#1e293b;}
-.grid-main{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:30px;}
-.grid-sub{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:12px;}
-
-.subject-card{
-  background:#fff; border-radius:var(--radius); padding:24px; cursor:pointer;
-  border:1px solid var(--border); transition:0.2s; display:flex; flex-direction:column; align-items:center; text-align:center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-.subject-card:hover{transform:translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);}
-.icon-box{width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:12px; color:#fff;}
-.subj-title{font-size:18px; font-weight:700;}
-.subj-desc{font-size:13px; color:#64748b; margin-top:4px;}
-
-/* --- Views: Category List --- */
-.cat-header{display:flex; align-items:center; gap:10px; margin-bottom:20px;}
-.back-btn{padding:8px 16px; border-radius:20px; border:1px solid #ccc; background:#fff; cursor:pointer; font-size:14px;}
-.topic-grid{display:grid; grid-template-columns:1fr; gap:12px;}
-.topic-btn{
-  background:#fff; padding:16px; border-radius:8px; border:1px solid var(--border); cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center; transition:0.2s;
-}
-.topic-btn:hover{border-color:var(--text); background:#f8fafc;}
-.topic-title{font-weight:700; font-size:16px;}
-.topic-tags{font-size:12px; color:#64748b;}
-
-/* --- Views: Content Detail --- */
-.detail-view{max-width:800px; margin:0 auto; background:#fff; padding:30px; border-radius:var(--radius); border:1px solid var(--border);}
-.detail-title{font-size:28px; font-weight:800; margin-bottom:10px; color:var(--text);}
-.badge{padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700; color:#fff; display:inline-block; margin-right:4px;}
-
-/* Content Styling */
-.section-title{font-size:18px; font-weight:700; margin:24px 0 12px 0; border-bottom:2px solid #f1f5f9; padding-bottom:8px;}
-table{width:100%; border-collapse:collapse; margin-bottom:15px; font-size:15px;}
-th{background:#f8fafc; padding:10px; text-align:left; color:#475569;}
-td{border-bottom:1px solid #f1f5f9; padding:10px;}
-.red-flag{background:#fef2f2; border-left:4px solid #ef4444; padding:12px; margin:15px 0; color:#991b1b;}
-.exam-tip{background:#fffbeb; border-left:4px solid #f59e0b; padding:12px; margin:15px 0; color:#92400e;}
-.concept-box{background:#eff6ff; border:1px solid #dbeafe; padding:12px; border-radius:6px; margin:15px 0;}
-ul{padding-left:20px; line-height:1.6;}
-
-/* Mobile Responsive */
-@media(max-width: 900px){
-  .sidebar{position:fixed; left:-100%; height:100%; box-shadow:4px 0 20px rgba(0,0,0,0.2);}
-  .sidebar.open{left:0;}
-  .menu-overlay.open{display:block;}
-  .header-bar{display:flex;}
-  .grid-main{grid-template-columns:1fr;}
-  .topic-grid{grid-template-columns:1fr;}
-  .detail-view{padding:20px; border:none;}
-}
-@media(min-width: 901px){
-  .topic-grid{grid-template-columns:1fr 1fr;}
-}
-</style>
-</head>
-<body>
-
-<div class="menu-overlay" onclick="toggleSidebar()"></div>
-
-<div class="app-container">
-  <!-- Sidebar (Quick Nav) -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">PT 國考資料庫</div>
-    <div class="nav-scroll">
-      <div class="nav-item" onclick="renderHome()">🏠 回首頁 (Home)</div>
-      <div style="padding:10px 20px; font-size:11px; color:#64748b; font-weight:bold; margin-top:10px;">快速跳轉</div>
-      <div class="nav-item" onclick="renderCategory('ortho')">🦴 骨科</div>
-      <div class="nav-item" onclick="renderCategory('neuro')">🧠 神經</div>
-      <div class="nav-item" onclick="renderCategory('cardio')">🫀 心肺</div>
-      <div class="nav-item" onclick="renderCategory('peds')">👶 小兒</div>
-      <div class="nav-item" onclick="renderCategory('modality')">⚡ 儀器</div>
-      <div class="nav-item" onclick="renderCategory('assistive')">🦽 輔具</div>
-      <div class="nav-item" onclick="renderCategory('biomech')">🚶 力學</div>
-    </div>
-  </aside>
-
-  <!-- Main Area -->
-  <main class="main">
-    <div class="header-bar">
-      <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-      <div style="font-weight:700; margin-left:10px;">PT Exam Hub</div>
-    </div>
-    <div class="content-area" id="mainContent">
-      <!-- Dynamic Content -->
-    </div>
-  </main>
-</div>
-
-<script>
-// =========================
-// 1. 資料庫 (The Big DB)
-// =========================
-const database = [
-  // --- 骨科 ---
-  { id: 'ortho-test', cat: 'ortho', title: '骨科特殊測試', tags: ['肩膝', '敏感度'], content: `
-    <div class="exam-tip">💡 重點：Lachman Test 是 ACL 斷裂最準確的測試。</div>
-    <div class="section-title">肩膀 (Shoulder)</div>
-    <table><tr><th>測試</th><th>目的</th></tr><tr><td>Neer's</td><td>夾擠症候群</td></tr><tr><td>Drop Arm</td><td>旋轉肌袖斷裂</td></tr></table>
-    <div class="section-title">膝蓋 (Knee)</div>
-    <table><tr><th>測試</th><th>目的</th></tr><tr><td>Lachman</td><td>ACL</td></tr><tr><td>McMurray</td><td>半月板</td></tr></table>
-  `},
-  { id: 'ortho-manual', cat: 'ortho', title: '徒手治療學派', tags: ['凹凸法則', 'Maitland'], content: `
-    <div class="red-flag">凹凸法則必考！</div>
-    <div class="concept-box"><b>Convex (凸) 動：</b>滑動方向相反。<br><b>Concave (凹) 動：</b>滑動方向相同。</div>
-    <div class="section-title">Maitland 分級</div>
-    <ul><li>Gr I-II: 止痛</li><li>Gr III-IV: 增加活動度</li><li>Gr V: 鬆動術 (Manipulation)</li></ul>
-  `},
-  // --- 神經 ---
-  { id: 'neuro-stroke', cat: 'neuro', title: '腦中風 Brunnstrom', tags: ['分期', '協同動作'], content: `
-    <div class="section-title">Brunnstrom 分期</div>
-    <table><tr><th>Stage</th><th>特徵</th></tr><tr><td>I</td><td>軟癱</td></tr><tr><td>II</td><td>Synergy 出現</td></tr><tr><td>III</td><td>張力最強</td></tr><tr><td>IV</td><td>打破協同</td></tr><tr><td>V</td><td>分離動作</td></tr><tr><td>VI</td><td>接近正常</td></tr></table>
-  `},
-  { id: 'neuro-sci', cat: 'neuro', title: '脊髓損傷症候群', tags: ['SCI', 'ASIA'], content: `
-    <div class="section-title">不完全損傷</div>
-    <ul><li><b>Central Cord:</b> 上肢損傷 > 下肢 (走路像殭屍)。</li><li><b>Brown-Sequard:</b> 同側本體感覺喪失，對側痛溫覺喪失。</li></ul>
-    <div class="red-flag"><b>Autonomic Dysreflexia:</b> T6 以上損傷，血壓飆高，需立刻坐起！</div>
-  `},
-  // --- 心肺 ---
-  { id: 'cardio-ekg', cat: 'cardio', title: '心電圖與致命心律', tags: ['ACLS', 'EKG'], content: `
-    <div class="red-flag">看到 VF / VT / Asystole 立即 Call Help。</div>
-    <div class="section-title">波形意義</div>
-    <p>P波: 心房去極化 / QRS: 心室去極化 / T波: 心室再極化。</p>
-  `},
-  { id: 'cardio-rehab', cat: 'cardio', title: '心臟復健分期', tags: ['METs', 'Phase I'], content: `
-    <div class="section-title">Phase I 住院期</div>
-    <p>強度限制：RPE < 13，心跳 < Resting + 20。</p>
-    <div class="concept-box">METs: 3-4 (可平地行走、淋浴)。</div>
-  `},
-  // --- 小兒 ---
-  { id: 'peds-dev', cat: 'peds', title: '兒童發展里程碑', tags: ['動作發展', '反射'], content: `
-    <div class="exam-tip">口訣：頭頸軀幹四肢。</div>
-    <table><tr><th>月齡</th><th>能力</th></tr><tr><td>4m</td><td>翻身</td></tr><tr><td>6m</td><td>獨立坐</td></tr><tr><td>8m</td><td>腹爬</td></tr><tr><td>12m</td><td>放手走</td></tr></table>
-  `},
-  { id: 'peds-cp', cat: 'peds', title: '腦性麻痺 GMFCS', tags: ['CP', '分級'], content: `
-    <div class="section-title">GMFCS (6-12歲)</div>
-    <ul><li>L1: 跑跳自如。</li><li>L3: 室內需助行器。</li><li>L5: 完全依賴。</li></ul>
-  `},
-  // --- 儀器 ---
-  { id: 'mod-electro', cat: 'modality', title: '電療參數比較', tags: ['TENS', 'IF'], content: `
-    <div class="section-title">TENS 模式</div>
-    <p><b>高頻 (Conventional):</b> Gate control，止痛快。</p>
-    <p><b>低頻 (Acupuncture):</b> Opiate，止痛久。</p>
-  `},
-  // --- 輔具 ---
-  { id: 'at-wheel', cat: 'assistive', title: '輪椅測量', tags: ['Fit', '壓瘡'], content: `
-    <div class="red-flag">量錯導致壓瘡！</div>
-    <p>寬度：臀寬 + 2吋。<br>深度：臀後至膕窩 - 2吋。</p>
-  `},
-  // --- 生物力學 ---
-  { id: 'bio-gait', cat: 'biomech', title: '異常步態分析', tags: ['Trendelenburg'], content: `
-    <div class="section-title">常見步態</div>
-    <p><b>Trendelenburg:</b> 臀中肌無力，骨盆掉向健側。</p>
-    <p><b>Steppage:</b> 垂足 (Drop foot)。</p>
-  `},
-];
-
-// =========================
-// 2. 邏輯控制 (Logic)
-// =========================
-const mainArea = document.getElementById('mainContent');
-const sidebar = document.getElementById('sidebar');
-const menuOverlay = document.getElementById('menuOverlay');
-
-const categories = {
-  ortho: { name: '骨科物理治療', color: 'var(--ortho)', icon: '🦴' },
-  neuro: { name: '神經物理治療', color: 'var(--neuro)', icon: '🧠' },
-  cardio: { name: '心肺物理治療', color: 'var(--cardio)', icon: '🫀' },
-  peds: { name: '小兒物理治療', color: 'var(--peds)', icon: '👶' },
-  modality: { name: '物理因子與儀器', color: 'var(--modality)', icon: '⚡' },
-  assistive: { name: '輔具與科技', color: 'var(--assistive)', icon: '🦽' },
-  biomech: { name: '生物力學', color: 'var(--biomech)', icon: '🚶' }
-};
-
-// --- Render Functions ---
-
-function renderHome() {
-  mainArea.innerHTML = `
-    <div class="home-container">
-      <div class="hero-title">PT 國考全攻略資料庫</div>
+  // 1. 脊椎 (頸椎、腰椎、SIJ)
+  {
+    id: 'ortho-test-spine',
+    cat: 'ortho',
+    title: '脊椎特殊測試 (Spine: C/L/SIJ)',
+    tags: ['頸椎', '腰椎', '神經張力', 'SIJ'],
+    content: `
+      <div class="exam-tip">💡 國考重點：神經張力測試 (ULTT) 的動作順序，以及 SIJ 的 Cluster 測試。</div>
       
-      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:10px;">四大主科 (Main Subjects)</div>
-      <div class="grid-main">
-        ${createHomeCard('ortho')}
-        ${createHomeCard('neuro')}
-        ${createHomeCard('cardio')}
-        ${createHomeCard('peds')}
+      <div class="section-title">頸椎 (Cervical Spine)</div>
+      <table>
+        <tr><th width="30%">測試名稱</th><th>目的/陽性徵兆</th></tr>
+        <tr><td><b>Spurling's Test</b> (Foraminal Compression)</td><td><b>神經根壓迫 (Radiculopathy)</b><br>陽性：往患側側彎+下壓，產生放射痛。</td></tr>
+        <tr><td>Distraction Test</td><td><b>神經根症狀減緩</b><br>陽性：上提頭部，疼痛減輕 (與 Spurling 相反)。</td></tr>
+        <tr><td><b>Sharp-Purser Test</b></td><td><b>寰樞關節 (C1-C2) 不穩</b><br>陽性：向後推 C2 感到滑動或症狀減輕 (類風濕性關節炎患者必測)。</td></tr>
+        <tr><td>Alar Ligament Test</td><td><b>翼狀韌帶完整性</b><br>陽性：側彎頸部時，C2 棘突沒有跟著動。</td></tr>
+        <tr><td>Vertebral Artery Test</td><td><b>椎基底動脈供血不足 (VBI)</b><br>陽性：伸展+旋轉到底，出現暈眩、眼球震顫 (5D3N)。</td></tr>
+      </table>
+
+      <div class="section-title">上肢神經張力 (ULTT)</div>
+      <table>
+        <tr><th>測試</th><th>目標神經</th><th>關鍵動作</th></tr>
+        <tr><td>ULTT 1</td><td><b>正中神經 (Median n.)</b></td><td>Shoulder Abd + ER + Elbow Ext + Wrist Ext</td></tr>
+        <tr><td>ULTT 2a</td><td>正中神經</td><td>Shoulder Depression + Elbow Ext</td></tr>
+        <tr><td>ULTT 2b</td><td><b>橈神經 (Radial n.)</b></td><td>Shoulder Depression + Elbow Ext + <b>Wrist Flex + IR</b></td></tr>
+        <tr><td>ULTT 3</td><td><b>尺神經 (Ulnar n.)</b></td><td><b>Elbow Flex</b> (像戴眼鏡) + Wrist Ext</td></tr>
+      </table>
+
+      <div class="section-title">腰椎與薦髂關節 (Lumbar & SIJ)</div>
+      <table>
+        <tr><th>測試名稱</th><th>目的/陽性徵兆</th></tr>
+        <tr><td><b>SLR (直抬腿)</b></td><td><b>坐骨神經痛/椎間盤突出</b><br>陽性：35-70度出現放射痛。(<35度可能是急性發炎)</td></tr>
+        <tr><td>Slump Test</td><td><b>硬脊膜/神經張力</b><br>比 SLR 更敏感 (Sensitive)。</td></tr>
+        <tr><td>Prone Knee Bend</td><td><b>股神經 (L2-L4)</b><br>陽性：大腿前側痛。</td></tr>
+        <tr><td>Stork Test (單腳站後仰)</td><td><b>脊椎解離/滑脫 (Spondylolisthesis)</b><br>陽性：站立側下背痛。</td></tr>
+        <tr><td><b>SIJ Laslett Cluster</b></td><td>包含 Distraction, Compression, Thigh Thrust, Sacral Thrust, Gaenslen's。<br><b>3/5 陽性</b>高度懷疑 SIJ 問題。</td></tr>
+      </table>
+    `
+  },
+
+  // 2. 肩關節 (Shoulder)
+  {
+    id: 'ortho-test-shoulder',
+    cat: 'ortho',
+    title: '肩關節特殊測試 (Shoulder Complex)',
+    tags: ['旋轉肌袖', '夾擠', '不穩定'],
+    content: `
+      <div class="card">
+        <div class="section-title">夾擠症候群 (Impingement)</div>
+        <table>
+          <tr><th>測試</th><th>執行</th><th>意義</th></tr>
+          <tr><td><b>Neer's</b></td><td>被動屈曲到底 (內轉)</td><td>旋轉肌袖夾擠 (長頭肌腱/Supraspinatus)</td></tr>
+          <tr><td><b>Hawkins-Kennedy</b></td><td>屈曲90度 + 內轉</td><td>夾擠 (Supraspinatus) - 最敏感</td></tr>
+          <tr><td>Painful Arc</td><td>主動外展 60-120度</td><td>夾擠疼痛弧</td></tr>
+        </table>
       </div>
 
-      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:10px;">進階與基礎 (Advanced)</div>
-      <div class="grid-sub">
-        ${createHomeCard('modality', true)}
-        ${createHomeCard('assistive', true)}
-        ${createHomeCard('biomech', true)}
+      <div class="card">
+        <div class="section-title">旋轉肌袖損傷 (Rotator Cuff Tear)</div>
+        <table>
+          <tr><th>肌肉</th><th>測試名稱</th><th>陽性徵兆</th></tr>
+          <tr><td><b>Supraspinatus</b></td><td>Empty Can (Jobe's)</td><td>外展90度+內轉 (倒可樂) 抗阻無力/痛</td></tr>
+          <tr><td><b>Supraspinatus</b></td><td>Drop Arm Test</td><td>無法控制緩慢放下 (全斷)</td></tr>
+          <tr><td><b>Infraspinatus</b></td><td>ER Lag Sign</td><td>無法維持外轉角度 (彈回)</td></tr>
+          <tr><td><b>Subscapularis</b></td><td>Lift-off Sign</td><td>手背置於後背，無法向後抬離</td></tr>
+          <tr><td>Subscapularis</td><td>Belly Press</td><td>壓肚子時手肘向後掉 (無法維持手肘向前)</td></tr>
+        </table>
       </div>
-    </div>
-  `;
-  closeSidebar();
-}
 
-function createHomeCard(key, isSub = false) {
-  const c = categories[key];
-  if(isSub) {
-    return `
-      <div class="subject-card" onclick="renderCategory('${key}')" style="border-top:4px solid ${c.color}; padding:16px;">
-        <div style="font-size:24px;">${c.icon}</div>
-        <div style="font-weight:700; margin-top:8px; font-size:15px;">${c.name.split(' ')[1]}</div>
+      <div class="card">
+        <div class="section-title">不穩定與關節唇 (Instability & Labrum)</div>
+        <ul>
+          <li><b>Apprehension Test (恐懼測試)：</b> 測試<b>前側不穩定</b>。外展90+外轉，病人感覺快脫臼而抵抗。</li>
+          <li><b>Sulcus Sign：</b> 手臂向下拉，肩峰下出現凹陷 >1-2cm，代表<b>下方不穩定</b> (多向性)。</li>
+          <li><b>O'Brien's Test (Active Compression)：</b> 區分 SLAP (深層痛) 與 AC joint (表層痛)。</li>
+          <li><b>Speed's / Yergason's：</b> 測試<b>二頭肌長頭</b>肌腱炎或 SLAP。</li>
+        </ul>
       </div>
-    `;
+    `
+  },
+
+  // 3. 肘、腕、手 (Elbow, Wrist, Hand)
+  {
+    id: 'ortho-test-elbow-hand',
+    cat: 'ortho',
+    title: '肘腕指特殊測試 (Elbow/Wrist/Hand)',
+    tags: ['網球肘', '腕隧道', '媽媽手'],
+    content: `
+      <div class="section-title">手肘 (Elbow)</div>
+      <table>
+        <tr><th>病症</th><th>測試名稱</th><th>執行方式</th></tr>
+        <tr><td><b>外上髁炎 (網球肘)</b></td><td>Cozen's Test</td><td>抗阻：手腕伸直 + 橈側偏移 (R-dev)。</td></tr>
+        <tr><td>(Lateral Epicondylitis)</td><td>Mill's Test</td><td>被動：伸直手肘 + 手腕屈曲 + 尺側偏移。</td></tr>
+        <tr><td><b>內上髁炎 (高爾夫球肘)</b></td><td>Golfer's Elbow Test</td><td>被動：伸直手肘 + 手腕背屈 (Extension) + 前臂旋後。</td></tr>
+        <tr><td>尺神經壓迫 (肘隧道)</td><td>Tinel's Sign (Elbow)</td><td>敲擊尺神經溝 (Cubital tunnel)。</td></tr>
+        <tr><td>內側韌帶 (MCL)</td><td>Valgus Stress</td><td>給予外翻應力 (分別測 0度/30度)。</td></tr>
+      </table>
+
+      <div class="section-title">手腕與手指 (Wrist & Hand)</div>
+      <table>
+        <tr><th>病症</th><th>測試名稱</th><th>陽性徵兆</th></tr>
+        <tr><td><b>腕隧道 (CTS)</b></td><td>Phalen's Test</td><td>手背對手背屈曲 1分鐘，拇/食/中指麻。</td></tr>
+        <tr><td></td><td>Tinel's Sign (Wrist)</td><td>敲擊腕橫韌帶處，正中神經支配區麻。</td></tr>
+        <tr><td><b>媽媽手 (De Quervain's)</b></td><td>Finkelstein Test</td><td>握拳包住拇指，做尺側偏移 (U-dev) 誘發劇痛。</td></tr>
+        <tr><td>尺神經麻痺</td><td><b>Froment's Sign</b></td><td>用力捏紙時，拇指 IP 關節屈曲 (因為內收肌無力，改用 FPL 代償)。</td></tr>
+        <tr><td>血管循環</td><td>Allen's Test</td><td>測試橈/尺動脈供血是否通暢。</td></tr>
+      </table>
+    `
+  },
+
+  // 4. 髖關節 (Hip)
+  {
+    id: 'ortho-test-hip',
+    cat: 'ortho',
+    title: '髖關節特殊測試 (Hip)',
+    tags: ['緊繃測試', '先天脫位', '退化'],
+    content: `
+      <div class="card">
+        <div class="section-title">肌肉緊繃度測試 (Contracture)</div>
+        <div class="exam-tip">💡 必考：如何區分單關節 vs 雙關節肌緊繃。</div>
+        <table>
+          <tr><th>測試</th><th>目標肌肉</th><th>陽性</th></tr>
+          <tr><td><b>Thomas Test</b></td><td>髂腰肌 / 股直肌</td><td>平躺抱膝，對側腿無法平貼床面。<br>(若壓膝蓋會翹起來 -> 股直肌緊)</td></tr>
+          <tr><td><b>Ober's Test</b></td><td>IT Band / TFL</td><td>側躺，上腳無法被動內收掉至床面。</td></tr>
+          <tr><td><b>Ely's Test</b></td><td>股直肌 (Rectus Femoris)</td><td>趴姿屈膝，屁股翹起來。</td></tr>
+          <tr><td>90-90 SLR</td><td>大腿後肌 (Hamstrings)</td><td>仰躺髖膝90度，膝伸直角度 < 20度。</td></tr>
+          <tr><td>Piriformis Test</td><td>梨狀肌</td><td>側躺，屈髖60度+下壓膝蓋 (內轉) 誘發屁股痛。</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">關節病變與發育</div>
+        <ul>
+          <li><b>Trendelenburg Sign：</b> 單腳站，對側骨盆掉下去 -> 站立側<b>臀中肌</b>無力。</li>
+          <li><b>FABER (Patrick's) Test：</b> Flex/Abd/ER (像數字4)。腹股溝痛 (Hip)，後側痛 (SIJ)。</li>
+          <li><b>Scour Test：</b> 髖關節研磨。測試 OA 或 Labrum 損傷。</li>
+          <li><b>Barlow & Ortolani：</b> 小兒髖關節脫位 (DDH)。Barlow (推出去/脫位)，Ortolani (復位/歸位)。</li>
+        </ul>
+      </div>
+    `
+  },
+
+  // 5. 膝關節 (Knee)
+  {
+    id: 'ortho-test-knee',
+    cat: 'ortho',
+    title: '膝關節特殊測試 (Knee)',
+    tags: ['ACL', '半月板', 'PFPS'],
+    content: `
+      <div class="concept-box">
+        <b>ACL 黃金標準：</b> Lachman Test (20-30度屈膝)。<br>
+        <b>PCL 黃金標準：</b> Posterior Drawer Test 或 Posterior Sag Sign。
+      </div>
+
+      <div class="section-title">韌帶不穩定 (Ligaments)</div>
+      <table>
+        <tr><th>結構</th><th>測試名稱</th><th>備註</th></tr>
+        <tr><td><b>ACL</b> (前十字)</td><td>Lachman Test</td><td>最準。</td></tr>
+        <tr><td></td><td>Anterior Drawer</td><td>屈膝90度。易受 Hamstrings 痙攣影響 (假陰性)。</td></tr>
+        <tr><td></td><td>Pivot Shift</td><td>測試旋轉不穩定 (由伸直到屈曲+外翻+內轉)。</td></tr>
+        <tr><td><b>PCL</b> (後十字)</td><td>Posterior Sag Sign</td><td>Godfrey test。屈髖膝90度，看脛骨粗隆下陷。</td></tr>
+        <tr><td><b>MCL/LCL</b></td><td>Valgus / Varus</td><td>Valgus (測 MCL)，Varus (測 LCL)。</td></tr>
+      </table>
+
+      <div class="section-title">半月板 (Meniscus)</div>
+      <ul>
+        <li><b>McMurray Test：</b> 屈膝到底 + 旋轉 + 伸直。內轉測外側，外轉測內側 (Heel points to meniscus)。</li>
+        <li><b>Apley's Grind：</b> 趴姿，垂直加壓 + 旋轉。痛 = 半月板；拉起痛 = 韌帶。</li>
+        <li><b>Thessaly Test：</b> 單腳站立旋轉 20度。準確度高。</li>
+      </ul>
+
+      <div class="section-title">髕骨股骨關節 (PFPS)</div>
+      <ul>
+        <li><b>Clarke's Sign (Grind)：</b> 壓住髕骨上緣，請病人股四頭肌收縮。劇痛為陽性 (軟化症)。</li>
+        <li><b>Patellar Apprehension：</b> 往外推髕骨，病人恐懼 (習慣性脫位)。</li>
+      </ul>
+    `
+  },
+
+  // 6. 踝足部 (Ankle & Foot)
+  {
+    id: 'ortho-test-ankle',
+    cat: 'ortho',
+    title: '踝足部特殊測試 (Ankle/Foot)',
+    tags: ['腳踝扭傷', 'Achilles', 'DVT'],
+    content: `
+      <div class="section-title">韌帶扭傷 (Sprain)</div>
+      <table>
+        <tr><th>韌帶</th><th>測試名稱</th><th>執行方式</th></tr>
+        <tr><td><b>ATFL</b> (前距腓)</td><td>Anterior Drawer</td><td>固定小腿，向前拉腳跟。最常見扭傷韌帶。</td></tr>
+        <tr><td><b>CFL</b> (跟腓)</td><td>Talar Tilt (Inversion)</td><td>將距骨做內翻 (Inversion)。</td></tr>
+        <tr><td>Deltoid (三角)</td><td>Talar Tilt (Eversion)</td><td>將距骨做外翻 (Eversion)。</td></tr>
+        <tr><td>Syndesmosis</td><td>Squeeze Test</td><td>擠壓小腿中段，腳踝痛 = 高位踝扭傷。</td></tr>
+        <tr><td>(下脛腓聯合)</td><td>Kleiger's (ER) Test</td><td>腳踝背屈 + 外轉，誘發疼痛。</td></tr>
+      </table>
+
+      <div class="section-title">其他病變</div>
+      <ul>
+        <li><b>Thompson Test：</b> 捏小腿肚，腳沒動 (無 PF) = <b>阿基里斯腱斷裂 (Achilles rupture)</b>。</li>
+        <li><b>Homan's Sign：</b> 快速被動背屈 (DF)，小腿深層劇痛 = 可能有 <b>深層靜脈栓塞 (DVT)</b>。(需進一步做 Doppler)。</li>
+        <li><b>Feiss Line：</b> 測量扁平足 (Navicular drop)。</li>
+        <li><b>Windlass Test：</b> 被動伸直大拇指，足底痛 = 足底筋膜炎。</li>
+      </ul>
+    `
   }
-  return `
-    <div class="subject-card" onclick="renderCategory('${key}')" style="border-top:4px solid ${c.color}">
-      <div class="icon-box" style="background:${c.color}">${c.icon}</div>
-      <div class="subj-title" style="color:${c.color}">${c.name.split(' ')[1]}</div>
-      <div class="subj-desc">點擊進入單元選擇</div>
-    </div>
-  `;
-}
-
-function renderCategory(catKey) {
-  const cat = categories[catKey];
-  const items = database.filter(d => d.cat === catKey);
-
-  let gridHtml = items.map(item => `
-    <div class="topic-btn" onclick="renderContent('${item.id}')">
-      <div>
-        <div class="topic-title">${item.title}</div>
-        <div class="topic-tags">${item.tags.join(' • ')}</div>
-      </div>
-      <div style="color:#ccc">➔</div>
-    </div>
-  `).join('');
-
-  if(items.length === 0) gridHtml = `<div style="color:#999; text-align:center;">此分類尚無內容</div>`;
-
-  mainArea.innerHTML = `
-    <div class="cat-header">
-      <button class="back-btn" onclick="renderHome()">← 回首頁</button>
-      <h2 style="margin:0; color:${cat.color}">${cat.icon} ${cat.name}</h2>
-    </div>
-    <div class="topic-grid">
-      ${gridHtml}
-    </div>
-  `;
-  closeSidebar();
-}
-
-function renderContent(id) {
-  const data = database.find(d => d.id === id);
-  const cat = categories[data.cat];
-  const tagsHtml = data.tags.map(t => `<span class="badge" style="background:${cat.color}">${t}</span>`).join('');
-
-  mainArea.innerHTML = `
-    <div class="cat-header">
-      <button class="back-btn" onclick="renderCategory('${data.cat}')">← 回 ${cat.name.split(' ')[1]}</button>
-    </div>
-    <div class="detail-view">
-      <h1 class="detail-title">${data.title}</h1>
-      <div style="margin-bottom:20px;">${tagsHtml}</div>
-      <div class="detail-body">
-        ${data.content}
-      </div>
-    </div>
-  `;
-}
-
-// --- Sidebar Toggle ---
-function toggleSidebar() {
-  sidebar.classList.toggle('open');
-  menuOverlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
-}
-
-function closeSidebar() {
-  sidebar.classList.remove('open');
-  menuOverlay.style.display = 'none';
-}
-
-// Init
-renderHome();
-
-</script>
-</body>
-</html>
