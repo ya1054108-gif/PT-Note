@@ -116,24 +116,76 @@ ul, ol{padding-left:20px; line-height:1.7;}
 const database = [
   // --- 骨科 (Magee Complete) ---
   {
-    id: 'magee-assess', cat: 'ortho', title: 'Magee: 基礎評估觀念', tags: ['Capsular', 'End-feel'],
+    {
+    id: 'magee-capsular-full',
+    cat: 'ortho',
+    title: 'Magee: 關節受限模式與終端感覺大全',
+    tags: ['Capsular Pattern', 'End-feel', 'Cyriax'],
     content: `
-      <div class="section-title">關節囊受限模式 (Capsular Patterns)</div>
-      <div class="exam-tip">💡 國考必背順序 (最受限 -> 次受限)</div>
+      <div class="exam-tip">
+        💡 <b>定義：</b><br>
+        1. <b>Capsular Pattern:</b> 當整個關節囊發炎或纖維化時，各個動作受限的特定比例 (Cyriax)。<br>
+        2. <b>End-Feel:</b> 關節被動活動到終端時的手感。
+      </div>
+
+      <div class="section-title">1. 上肢關節 (Upper Extremity)</div>
       <table>
-        <tr><th>關節</th><th>受限順序</th></tr>
-        <tr><td><b>肩 (Glenohumeral)</b></td><td>ER > Abd > IR</td></tr>
-        <tr><td><b>髖 (Hip)</b></td><td>Flex > Abd > IR (或 IR>Ext>Abd)</td></tr>
-        <tr><td>膝 (Knee)</td><td>Flex > Ext</td></tr>
-        <tr><td>踝 (Talocrural)</td><td>PF > DF</td></tr>
+        <tr><th width="30%">關節</th><th>受限模式 (限制最大 -> 最小)</th></tr>
+        <tr><td><b>肩關節 (Glenohumeral)</b></td><td><b>ER > Abd > IR</b> (外轉 > 外展 > 內轉)</td></tr>
+        <tr><td>胸鎖關節 (SC Joint)</td><td>動作末端疼痛 (Pain at extreme ROM)</td></tr>
+        <tr><td>肩鎖關節 (AC Joint)</td><td>動作末端疼痛</td></tr>
+        <tr><td><b>肘關節 (Humeroulnar)</b></td><td><b>Flex > Ext</b> (屈曲 > 伸直)</td></tr>
+        <tr><td>橈肱關節 (Radiohumeral)</td><td>Flex > Ext > Sup > Pro</td></tr>
+        <tr><td>上/下尺橈 (Radioulnar)</td><td>Pro = Sup (旋前旋後限制相等，且末端痛)</td></tr>
+        <tr><td><b>手腕 (Radiocarpal)</b></td><td><b>Flex = Ext</b> (屈伸限制相等)</td></tr>
+        <tr><td>拇指基部 (CMC)</td><td><b>Abd > Ext</b> (外展 > 伸直)</td></tr>
+        <tr><td>手指 (MCP & IP)</td><td>Flex > Ext</td></tr>
       </table>
-      <div class="section-title">終端感覺 (End-Feels)</div>
-      <ul>
-        <li><b>Bone-to-bone (Hard):</b> 肘伸直。</li>
-        <li><b>Tissue stretch (Firm):</b> 肩外轉。</li>
-        <li><b>Empty:</b> 痛到不敢動 (急性發炎)。</li>
-        <li><b>Springy block:</b> 半月板卡住。</li>
-      </ul>
+
+      <div class="section-title">2. 下肢關節 (Lower Extremity)</div>
+      <table>
+        <tr><th>關節</th><th>受限模式</th></tr>
+        <tr><td><b>髖關節 (Hip)</b></td><td><b>Flex > Abd > IR</b> (屈曲 > 外展 > 內轉)<br>*(註: 有些版本為 IR>Ext>Abd，但 Magee 主引 Cyriax)*</td></tr>
+        <tr><td><b>膝關節 (Tibiofemoral)</b></td><td><b>Flex > Ext</b> (屈曲受限遠大於伸直)</td></tr>
+        <tr><td><b>踝關節 (Talocrural)</b></td><td><b>PF > DF</b> (蹠屈 > 背屈)</td></tr>
+        <tr><td>距下關節 (Subtalar)</td><td>Varus > Valgus (內翻 > 外翻)</td></tr>
+        <tr><td>中跗關節 (Midtarsal)</td><td>DF > PF > Add > IR</td></tr>
+        <tr><td>腳大拇趾 (MTP 1st)</td><td>Ext > Flex</td></tr>
+        <tr><td>其他腳趾 (MTP 2-5)</td><td>Flex > Ext</td></tr>
+      </table>
+
+      <div class="section-title">3. 脊椎 (Spine)</div>
+      <div class="concept-box">脊椎的受限模式通常是：側彎與旋轉受限相等，伸直受限。</div>
+      <table>
+        <tr><th>區域</th><th>受限模式</th></tr>
+        <tr><td>頸椎 (Cervical)</td><td>側彎與旋轉受限相等 > 伸直。(Flex 通常正常)</td></tr>
+        <tr><td>胸椎 (Thoracic)</td><td>側彎與旋轉受限相等 > 伸直。</td></tr>
+        <tr><td>腰椎 (Lumbar)</td><td>側彎與旋轉受限相等 > 伸直。</td></tr>
+        <tr><td>顳顎關節 (TMJ)</td><td>張口受限 (Opening limited)。</td></tr>
+      </table>
+
+      <div class="section-title">4. 正常終端感覺 (Normal End-Feels)</div>
+      <table>
+        <tr><th>類型</th><th>描述</th><th>範例</th></tr>
+        <tr><td><b>Bone-to-bone (Hard)</b></td><td>硬碰硬，無痛</td><td>肘伸直 (Elbow Ext)</td></tr>
+        <tr><td><b>Soft tissue approx.</b></td><td>軟組織擠壓</td><td>膝屈曲 (Knee Flex)</td></tr>
+        <tr><td><b>Tissue Stretch (Firm)</b></td><td>有彈性的阻力 (韌帶/關節囊)</td><td>肩外轉、指伸直</td></tr>
+      </table>
+
+      <div class="section-title">5. 異常終端感覺 (Abnormal End-Feels)</div>
+      <table>
+        <tr><th>類型</th><th>可能原因</th></tr>
+        <tr><td><b>Early Muscle Spasm</b></td><td>急性受傷、保護性肌肉收縮 (發炎期)。</td></tr>
+        <tr><td><b>Late Muscle Spasm</b></td><td>不穩定造成的肌肉緊繃 (Instability)。</td></tr>
+        <tr><td><b>Mushy (Boggy)</b></td><td>軟軟的「海綿感」 -> <b>關節積水 (Effusion)</b>。</td></tr>
+        <tr><td><b>Hard Capsule</b></td><td>像結凍一樣硬 (比正常 Firm 硬) -> <b>沾黏 (Frozen)</b>。</td></tr>
+        <tr><td><b>Soft Capsule</b></td><td>比正常鬆 -> 水腫或滑膜炎。</td></tr>
+        <tr><td><b>Bone-to-bone</b></td><td>在不該出現的地方出現 -> 骨刺 (Osteophyte)。</td></tr>
+        <tr><td><b>Empty</b></td><td>因為劇痛而無法測到終點 -> 骨折、滑囊炎、腫瘤。</td></tr>
+        <tr><td><b>Springy Block</b></td><td>回彈感 -> <b>半月板撕裂 (Meniscus tear)</b>。</td></tr>
+      </table>
+    `
+  },
     `
   },
   {
