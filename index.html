@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>PT 國考全攻略資料庫</title>
+<style>
+:root{
+  --bg: #f8fafc;
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #e2e8f0;
+  --card: #ffffff;
+  --text: #334155;
+  --border: #e2e8f0;
+  
+  /* Subject Colors */
+  --ortho: #3b82f6; /* 骨科藍 */
+  --neuro: #8b5cf6; /* 神經紫 */
+  --cardio: #ef4444; /* 心肺紅 */
+  --peds: #f97316;   /* 小兒橘 */
+  
+  --radius: 8px;
+  --header-h: 60px;
+  --sidebar-w: 280px;
+}
+
+*{box-sizing:border-box}
+body{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif; margin:0; background:var(--bg); color:var(--text); height:100vh; overflow:hidden;}
+
+/* Layout */
+.app-container{display:flex; height:100vh;}
+
+/* Sidebar */
+.sidebar{
+  width:var(--sidebar-w); background:var(--sidebar-bg); color:var(--sidebar-text);
+  display:flex; flex-direction:column; flex-shrink:0; transition:0.3s;
+}
+.sidebar-header{padding:20px; border-bottom:1px solid rgba(255,255,255,0.1);}
+.app-logo{font-weight:800; font-size:18px; letter-spacing:1px; color:#fff;}
+.search-box{
+  margin:15px 0 0 0; padding:8px 12px; width:100%; border:none; border-radius:4px;
+  background:rgba(255,255,255,0.1); color:#fff; font-size:14px;
+}
+.search-box::placeholder{color:rgba(255,255,255,0.4);}
+
+.nav-scroll{overflow-y:auto; flex:1; padding:10px 0;}
+.nav-category{
+  padding:12px 20px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.5); margin-top:10px;
+}
+.nav-item{
+  padding:10px 20px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; transition:0.2s; border-left:3px solid transparent;
+}
+.nav-item:hover{background:rgba(255,255,255,0.05); color:#fff;}
+.nav-item.active{background:rgba(255,255,255,0.1); color:#fff;}
+/* Subject Border Colors */
+.nav-item.ortho.active{border-left-color:var(--ortho);}
+.nav-item.neuro.active{border-left-color:var(--neuro);}
+.nav-item.cardio.active{border-left-color:var(--cardio);}
+.nav-item.peds.active{border-left-color:var(--peds);}
+
+/* Main Content */
+.main{flex:1; display:flex; flex-direction:column; background:var(--bg); overflow:hidden;}
+.content-scroll{padding:30px; overflow-y:auto; height:100%; max-width:1000px; margin:0 auto; width:100%;}
+
+/* Typography & Components */
+h1{font-size:32px; font-weight:800; margin:0 0 10px 0; color:var(--text);}
+.subtitle{font-size:16px; color:#64748b; margin-bottom:30px; display:flex; align-items:center; gap:10px;}
+.badge{padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700; color:#fff;}
+
+.card{background:var(--card); padding:24px; border-radius:var(--radius); border:1px solid var(--border); margin-bottom:20px; box-shadow:0 2px 4px rgba(0,0,0,0.02);}
+.section-title{font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; padding-bottom:10px; border-bottom:1px solid #eee;}
+
+/* Table Styles */
+table{width:100%; border-collapse:collapse; font-size:15px; margin-bottom:10px;}
+th{background:#f1f5f9; text-align:left; padding:10px; font-weight:600; color:#475569;}
+td{border-bottom:1px solid #eee; padding:10px; color:#334155;}
+tr:last-child td{border-bottom:none;}
+
+/* Special Boxes */
+.exam-tip{background:#fffbeb; border-left:4px solid #f59e0b; padding:15px; margin-bottom:15px; color:#92400e; font-size:15px;}
+.red-flag{background:#fef2f2; border-left:4px solid #ef4444; padding:15px; margin-bottom:15px; color:#991b1b; font-size:15px;}
+.concept-box{background:#eff6ff; border:1px solid #dbeafe; padding:15px; border-radius:6px; margin-bottom:15px;}
+
+/* Lists */
+ul{margin:0; padding-left:20px;} li{margin-bottom:6px; line-height:1.6;}
+
+/* Mobile Toggle */
+.menu-btn{display:none; position:fixed; bottom:20px; right:20px; background:#1e293b; color:#fff; width:50px; height:50px; border-radius:50%; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.2); z-index:100; cursor:pointer;}
+
+@media(max-width: 900px){
+  .sidebar{position:fixed; left:-100%; height:100%; z-index:50;}
+  .sidebar.open{left:0;}
+  .menu-btn{display:flex;}
+  .content-scroll{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="app-logo">PT 國考全攻略</div>
+      <input type="text" class="search-box" id="searchBox" placeholder="搜尋關鍵字 (例: ACL, 中風)...">
+    </div>
+    <div class="nav-scroll" id="navList">
+      <!-- Items Injected Here -->
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="content-scroll" id="mainContent">
+      <!-- Content Injected Here -->
+    </div>
+  </main>
+  
+  <div class="menu-btn" onclick="toggleSidebar()">☰</div>
+</div>
+
+<script>
+// ==========================================
+//   巨大資料庫 (The Big Database)
+//   這裡示範每個科別的資料結構，您可以無限擴充
+// ==========================================
+
+const database = [
+  // --- 1. 骨科物理治療 (Orthopedics) ---
+  {
+    id: 'ortho-special-test',
+    cat: 'ortho',
+    title: '骨科特殊測試 (Special Tests)',
+    tags: ['肩膀', '膝蓋', '國考必考'],
+    content: `
+      <div class="exam-tip">💡 國考重點：Sensitivity (敏感度) vs Specificity (特異度) 的區別，以及測試陽性代表的結構。</div>
+      
+      <div class="card">
+        <div class="section-title">肩膀 (Shoulder)</div>
+        <table>
+          <tr><th>測試名稱</th><th>目的</th><th>陽性徵兆</th></tr>
+          <tr><td>Neer's Test</td><td>夾擠症候群 (Impingement)</td><td>被動彎曲到底產生疼痛</td></tr>
+          <tr><td>Hawkins-Kennedy</td><td>夾擠症候群 (Supraspinatus)</td><td>內轉時產生疼痛</td></tr>
+          <tr><td>Drop Arm Test</td><td>旋轉肌袖斷裂 (RCT)</td><td>手臂無法緩慢放下，直接掉落</td></tr>
+          <tr><td>Speed's Test</td><td>二頭肌長頭肌腱炎</td><td>結節間溝疼痛</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">膝蓋 (Knee)</div>
+        <div class="concept-box">
+          <b>前十字韌帶 (ACL) 測試比較：</b><br>
+          Lachman Test 是診斷 ACL 斷裂的黃金標準 (最準)。<br>
+          Anterior Drawer Test 容易受到 Hamstrings 痙攣影響造成假陰性。
+        </div>
+        <table>
+          <tr><th>測試名稱</th><th>目的</th><th>執行方式</th></tr>
+          <tr><td>Lachman Test</td><td>ACL 損傷</td><td>膝屈 30度，脛骨前拉</td></tr>
+          <tr><td>McMurray Test</td><td>半月板損傷</td><td>內/外轉 + 伸直膝蓋聽聲響</td></tr>
+          <tr><td>Valgus Stress</td><td>MCL 損傷</td><td>給予外翻應力 (分別測 0度/30度)</td></tr>
+        </table>
+      </div>
+    `
+  },
+  {
+    id: 'ortho-manual',
+    cat: 'ortho',
+    title: '徒手治療學派 (Manual Therapy)',
+    tags: ['關節鬆動術', 'Kaltenborn', 'Maitland'],
+    content: `
+      <div class="card">
+        <div class="section-title">凹凸法則 (Convex-Concave Rule)</div>
+        <div class="red-flag">⛔ 這是國考送分題，絕對不能錯！</div>
+        <ul>
+          <li><b>Convex (凸) 動：</b> 滑動方向與骨頭動作方向<b>相反</b>。(例：肩關節外展，肱骨頭向下滑)</li>
+          <li><b>Concave (凹) 動：</b> 滑動方向與骨頭動作方向<b>相同</b>。(例：膝關節伸直，脛骨向前滑)</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <div class="section-title">Maitland 分級 (Grades)</div>
+        <table>
+          <tr><th>分級</th><th>特徵</th><th>用途</th></tr>
+          <tr><td>Grade I</td><td>起始範圍，小振幅</td><td>止痛</td></tr>
+          <tr><td>Grade II</td><td>起始~中段範圍，大振幅</td><td>止痛</td></tr>
+          <tr><td>Grade III</td><td>中段~終端範圍，大振幅</td><td>增加活動度 (Stretching)</td></tr>
+          <tr><td>Grade IV</td><td>終端範圍，小振幅</td><td>增加活動度 (Stretching)</td></tr>
+          <tr><td>Grade V</td><td>超過終端範圍 (HVLA)</td><td>Manipulatoin (鬆動)</td></tr>
+        </table>
+      </div>
+    `
+  },
+
+  // --- 2. 神經物理治療 (Neurology) ---
+  {
+    id: 'neuro-stroke',
+    cat: 'neuro',
+    title: '腦中風 (CVA) - Brunnstrom 分期',
+    tags: ['中風', '動作控制', '分期'],
+    content: `
+      <div class="card">
+        <div class="section-title">Brunnstrom Recovery Stages</div>
+        <p>描述中風後偏癱側的動作恢復過程，由軟癱到張力出現，再到分離動作。</p>
+        <table>
+          <tr><th width="15%">分期</th><th>特徵描述</th></tr>
+          <tr><td>Stage I</td><td><b>Flaccidity (軟癱)</b>：無任何主動動作，無張力。</td></tr>
+          <tr><td>Stage II</td><td><b>Synergy 出現</b>：張力開始出現，誘發出聯合反應 (Associated reaction)。</td></tr>
+          <tr><td>Stage III</td><td><b>張力最強</b>：可隨意做出 Synergy 動作，但無法打破協同模式。</td></tr>
+          <tr><td>Stage IV</td><td><b>打破協同 (Spasticity 下降)</b>：開始有部分分離動作 (例：手背摸後背)。</td></tr>
+          <tr><td>Stage V</td><td><b>分離動作增加</b>：張力明顯下降，可做較難的分離動作 (例：手臂上舉過頭)。</td></tr>
+          <tr><td>Stage VI</td><td><b>接近正常</b>：單關節動作協調，張力幾乎正常。</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">協同動作模式 (Synergy Patterns)</div>
+        <div class="exam-tip">💡 考試常考：上肢屈肌協同 vs 下肢伸肌協同的組成動作。</div>
+        <ul>
+          <li><b>上肢屈肌協同 (UE Flexor Synergy)：</b> Scapula elevation/retraction, Shoulder ABD/ER, Elbow Flex, Forearm Supination. (典型姿勢：像是在抓癢)</li>
+          <li><b>下肢伸肌協同 (LE Extensor Synergy)：</b> Hip Ext/Add/IR, Knee Ext, Ankle PF/Inversion. (典型姿勢：垂足內翻)</li>
+        </ul>
+      </div>
+    `
+  },
+  {
+    id: 'neuro-sci',
+    cat: 'neuro',
+    title: '脊髓損傷 (SCI) - ASIA & 症候群',
+    tags: ['SCI', 'ASIA', 'Autonomic Dysreflexia'],
+    content: `
+      <div class="card">
+        <div class="section-title">不完全損傷症候群 (Incomplete Syndromes)</div>
+        <table>
+          <tr><th>症候群</th><th>受損位置</th><th>臨床表現</th></tr>
+          <tr><td>Central Cord</td><td>中央灰質 (常見於頸椎過伸)</td><td><b>上肢</b>損傷 > 下肢 (走路像殭屍，手不能動)。</td></tr>
+          <tr><td>Brown-Sequard</td><td>脊髓半切</td><td>同側：本體感覺/運動喪失<br>對側：痛溫覺喪失 (2-3節以下)。</td></tr>
+          <tr><td>Anterior Cord</td><td>前側 (脊髓前動脈缺血)</td><td>運動/痛溫覺喪失，<b>本體感覺保留</b> (還可以感覺到腳的位置)。</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">自主神經反射異常 (Autonomic Dysreflexia)</div>
+        <div class="red-flag">⚠ 危急狀況！常見於 T6 以上損傷患者。</div>
+        <p><b>成因：</b> 損傷平面以下的刺激 (如：尿滯留、便秘、壓瘡)。</p>
+        <p><b>症狀：</b> 血壓急劇升高、搏動性頭痛、損傷平面以上潮紅/流汗。</p>
+        <p><b>處理：</b> <b>立刻坐起</b> (利用姿勢性低血壓降壓)，檢查尿管導尿，給降壓藥。</p>
+      </div>
+    `
+  },
+
+  // --- 3. 心肺物理治療 (Cardiopulmonary) ---
+  {
+    id: 'cardio-ekg',
+    cat: 'cardio',
+    title: '心電圖判讀 (EKG) & 心律不整',
+    tags: ['ECG', '心律不整', 'ACLS'],
+    content: `
+      <div class="card">
+        <div class="section-title">PT 必須看懂的致命心律</div>
+        <div class="red-flag">遇到以下心律，立即停止治療並求救 (Call Help/Code Blue)。</div>
+        <ul>
+          <li><b>VF (心室顫動)：</b> 亂七八糟的波形，無脈搏。</li>
+          <li><b>VT (心室頻脈)：</b> 寬大 QRS，連續出現。若無脈搏需電擊。</li>
+          <li><b>Asystole (心搏停止)：</b> 一直線。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="section-title">常見波形意義</div>
+        <table>
+          <tr><th>波形</th><th>代表意義</th><th>異常意義</th></tr>
+          <tr><td>P wave</td><td>心房去極化</td><td>A-fib 時 P 波消失，變成 f 波。</td></tr>
+          <tr><td>QRS complex</td><td>心室去極化</td><td>變寬 (>0.12s) 代表 PVC 或 Bundle Branch Block。</td></tr>
+          <tr><td>T wave</td><td>心室再極化</td><td>高尖 T 波 (高血鉀)、倒置 (心肌缺氧)。</td></tr>
+        </table>
+      </div>
+    `
+  },
+  {
+    id: 'cardio-rehab',
+    cat: 'cardio',
+    title: '心臟復健分期 (Cardiac Rehab)',
+    tags: ['METs', '復健分期'],
+    content: `
+      <div class="card">
+        <div class="section-title">Phase I: 住院期 (Inpatient)</div>
+        <p><b>目標：</b> 早期活動，避免臥床併發症，衛教，出院計畫。</p>
+        <p><b>強度限制：</b></p>
+        <ul>
+          <li>心肌梗塞後：HR resting + 20 bpm。</li>
+          <li>開心手術後：HR resting + 30 bpm。</li>
+          <li>RPE < 13 (6-20 scale)。</li>
+        </ul>
+        <div class="exam-tip">💡 絕對禁忌症：不穩定心絞痛、未控制的心律不整、主動脈剝離。</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">常用活動 METs 對照</div>
+        <table>
+          <tr><th>METs</th><th>活動範例</th></tr>
+          <tr><td>1-2</td><td>坐著吃飯、床上主動運動、緩慢穿衣。</td></tr>
+          <tr><td>3-4</td><td>平地行走 (4km/hr)、自行淋浴、下樓梯。</td></tr>
+          <tr><td>5-6</td><td>快走、性行為、甚至輕鬆慢跑。</td></tr>
+        </table>
+      </div>
+    `
+  },
+
+  // --- 4. 小兒物理治療 (Pediatrics) ---
+  {
+    id: 'peds-develop',
+    cat: 'peds',
+    title: '兒童發展里程碑 (Milestones)',
+    tags: ['發展', '反射', '動作控制'],
+    content: `
+      <div class="card">
+        <div class="section-title">粗大動作發展重點 (Gross Motor)</div>
+        <div class="exam-tip">💡 口訣：頭頸軀幹四肢 (由上而下，由近端到遠端)</div>
+        <table>
+          <tr><th>月齡</th><th>關鍵能力</th></tr>
+          <tr><td>2-3 mon</td><td>Prone on elbows (趴著抬頭 45-90度)</td></tr>
+          <tr><td>4-5 mon</td><td>Roll over (翻身)、Pull to sit 無頭部滯後</td></tr>
+          <tr><td>6 mon</td><td><b>Sit independently (獨立坐)</b> - 重要里程碑</td></tr>
+          <tr><td>7-8 mon</td><td>Commando crawl (腹爬)、四點跪姿</td></tr>
+          <tr><td>9-10 mon</td><td>Creeping (四點爬)、扶站 (Cruising)</td></tr>
+          <tr><td>12 mon</td><td><b>Independent walk (放手走)</b></td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="section-title">原始反射 (Primitive Reflexes)</div>
+        <p>若該整合時間未整合，代表 CNS 成熟度異常。</p>
+        <table>
+          <tr><th>反射</th><th>誘發/反應</th><th>整合時間</th></tr>
+          <tr><td>ATNR (不對稱頸張力)</td><td>轉頭 / 臉側手腳伸直、後腦側屈曲 (拉弓)</td><td>4-6 個月</td></tr>
+          <tr><td>STNR (對稱頸張力)</td><td>頸屈/伸 / 上肢屈下肢伸 (or vice versa)</td><td>8-12 個月</td></tr>
+          <tr><td>Moro (驚嚇反射)</td><td>頭後掉 / 手張開再抱胸</td><td>4-6 個月</td></tr>
+          <tr><td>Palmar Grasp (手抓握)</td><td>壓手掌 / 抓緊</td><td>4-6 個月</td></tr>
+        </table>
+      </div>
+    `
+  },
+  {
+    id: 'peds-cp',
+    cat: 'peds',
+    title: '腦性麻痺 (Cerebral Palsy)',
+    tags: ['CP', 'GMFCS', '痙攣'],
+    content: `
+      <div class="card">
+        <div class="section-title">GMFCS 分級系統 (6-12歲)</div>
+        <div class="red-flag">國考常考分級判定！</div>
+        <ul>
+          <li><b>Level I：</b> 可跑跳，走樓梯不需扶手。</li>
+          <li><b>Level II：</b> 走樓梯需扶手，戶外長距離需輔具。</li>
+          <li><b>Level III：</b> 室內需手持輔具行走，戶外需輪椅。</li>
+          <li><b>Level IV：</b> 大多數時間需電動輪椅，可自行操作。</li>
+          <li><b>Level V：</b> 完全依賴，無抗重力頭頸控制。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="section-title">常見類型</div>
+        <table>
+          <tr><th>類型</th><th>損傷部位</th><th>臨床特徵</th></tr>
+          <tr><td>Spastic (痙攣型)</td><td>Cortex (皮質脊髓束)</td><td>張力強，剪刀腳，深腱反射增強。</td></tr>
+          <tr><td>Athetoid (徐動型)</td><td>Basal Ganglia (基底核)</td><td>張力波動大，不由自主扭動。</td></tr>
+          <tr><td>Ataxic (協調不良)</td><td>Cerebellum (小腦)</td><td>平衡差，辨距不良 (Dysmetria)。</td></tr>
+        </table>
+      </div>
+    `
+  }
+];
+
+// ==========================================
+//   程式邏輯 (Application Logic)
+// ==========================================
+
+const navList = document.getElementById('navList');
+const mainContent = document.getElementById('mainContent');
+const searchBox = document.getElementById('searchBox');
+const sidebar = document.getElementById('sidebar');
+
+// 1. Render Sidebar
+function renderNav(filter = '') {
+  const categories = [
+    { id: 'ortho', name: '🦴 骨科 (Orthopedics)', color: 'var(--ortho)' },
+    { id: 'neuro', name: '🧠 神經 (Neurology)', color: 'var(--neuro)' },
+    { id: 'cardio', name: '🫀 心肺 (Cardiopulmonary)', color: 'var(--cardio)' },
+    { id: 'peds', name: '👶 小兒 (Pediatrics)', color: 'var(--peds)' }
+  ];
+
+  let html = '';
+
+  categories.forEach(cat => {
+    // Filter items belonging to this category AND matching search
+    const items = database.filter(item => {
+      const matchCat = item.cat === cat.id;
+      const matchSearch = item.title.toLowerCase().includes(filter) || item.tags.some(t => t.toLowerCase().includes(filter));
+      return matchCat && matchSearch;
+    });
+
+    if (items.length > 0) {
+      html += `<div class="nav-category" style="color:${cat.color}">${cat.name}</div>`;
+      items.forEach(item => {
+        html += `
+          <div class="nav-item ${cat.id}" onclick="loadContent('${item.id}')" id="nav-${item.id}">
+            ${item.title}
+          </div>
+        `;
+      });
+    }
+  });
+
+  navList.innerHTML = html;
+}
+
+// 2. Load Content
+function loadContent(id) {
+  const data = database.find(d => d.id === id);
+  if (!data) return;
+
+  // Render Tags
+  const tagsHtml = data.tags.map(t => `<span class="badge" style="background:var(--${data.cat})">${t}</span>`).join(' ');
+
+  // Update Main View
+  mainContent.innerHTML = `
+    <h1>${data.title}</h1>
+    <div class="subtitle">
+      ${tagsHtml}
+    </div>
+    ${data.content}
+    <div style="margin-top:50px; padding-top:20px; border-top:1px solid #eee; color:#94a3b8; font-size:13px; text-align:center;">
+      PT National Exam Database | 僅供國考複習參考
+    </div>
+  `;
+
+  // Highlight Active Nav
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const activeNav = document.getElementById(`nav-${id}`);
+  if(activeNav) activeNav.classList.add('active');
+
+  // Mobile: Close sidebar after click
+  if(window.innerWidth <= 900) toggleSidebar();
+}
+
+// 3. Search Logic
+searchBox.addEventListener('input', (e) => {
+  const term = e.target.value.toLowerCase();
+  renderNav(term);
+});
+
+// 4. Mobile Sidebar Toggle
+function toggleSidebar(){
+  sidebar.classList.toggle('open');
+}
+
+// Init
+renderNav();
+// Load first item by default
+if(database.length > 0) loadContent(database[0].id);
+
+</script>
+</body>
+</html>
