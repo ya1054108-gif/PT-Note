@@ -3,111 +3,69 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>PT 國考全攻略資料庫 (Pro)</title>
+<title>PT 國考全攻略 (Ultimate Edition)</title>
 <style>
 :root{
-  --bg: #f8fafc; 
-  --sidebar-bg: #1e293b; 
-  --sidebar-text: #e2e8f0;
-  --card: #ffffff; 
-  --text: #334155; 
-  --border: #e2e8f0;
-  
-  /* Subject Colors */
-  --ortho: #3b82f6;     /* 骨科藍 */
-  --neuro: #8b5cf6;     /* 神經紫 */
-  --cardio: #ef4444;    /* 心肺紅 */
-  --peds: #f97316;      /* 小兒橘 */
-  --modality: #059669;  /* 儀器綠 */
-  --assistive: #db2777; /* 輔具粉 */
-  --biomech: #4b5563;   /* 力學灰 */
-  
-  --radius: 12px;
-  --header-h: 60px;
-  --sidebar-w: 260px;
+  --bg: #f1f5f9; --sidebar-bg: #1e293b; --sidebar-text: #e2e8f0;
+  --card: #ffffff; --text: #334155; --border: #e2e8f0;
+  --ortho: #2563eb; --neuro: #7c3aed; --cardio: #dc2626; --peds: #ea580c;
+  --modality: #059669; --assistive: #db2777; --biomech: #4b5563;
+  --radius: 12px; --header-h: 60px; --sidebar-w: 260px;
 }
-
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif; margin:0; background:var(--bg); color:var(--text); height:100vh; overflow:hidden;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Microsoft JhengHei",sans-serif;margin:0;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;}
 
-/* --- Layout --- */
+/* Layout */
 .app-container{display:flex; height:100vh;}
 .main{flex:1; display:flex; flex-direction:column; background:var(--bg); overflow:hidden; position:relative;}
-.header-bar{
-  height:var(--header-h); background:#fff; display:flex; align-items:center; padding:0 16px; 
-  border-bottom:1px solid #eee; position:sticky; top:0; z-index:30; justify-content: space-between;
-}
+.header-bar{height:var(--header-h); background:#fff; display:flex; align-items:center; padding:0 16px; border-bottom:1px solid #eee; position:sticky; top:0; z-index:30; justify-content:space-between;}
 .content-area{flex:1; overflow-y:auto; padding:20px; scroll-behavior:smooth;}
 
-/* --- Sidebar --- */
-.sidebar{
-  width:var(--sidebar-w); background:var(--sidebar-bg); color:var(--sidebar-text);
-  display:flex; flex-direction:column; flex-shrink:0; transition: transform 0.3s ease;
-  z-index: 50;
-}
+/* Sidebar */
+.sidebar{width:var(--sidebar-w); background:var(--sidebar-bg); color:var(--sidebar-text); display:flex; flex-direction:column; flex-shrink:0; transition:transform 0.3s ease; z-index:50;}
 .sidebar-header{padding:20px; border-bottom:1px solid rgba(255,255,255,0.1); font-weight:800; font-size:18px; color:#fff;}
 .nav-scroll{overflow-y:auto; flex:1; padding:10px 0;}
 .nav-item{padding:12px 20px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:10px; transition:0.2s; border-left:3px solid transparent; color:rgba(255,255,255,0.7);}
 .nav-item:hover{background:rgba(255,255,255,0.05); color:#fff;}
-.nav-section{font-size:11px; font-weight:700; color:rgba(255,255,255,0.4); padding:15px 20px 5px; text-transform:uppercase; letter-spacing:1px;}
+.nav-section{font-size:11px; font-weight:700; color:rgba(255,255,255,0.4); padding:15px 20px 5px; text-transform:uppercase;}
 
-/* --- Mobile Toggle --- */
+/* Mobile */
 .menu-overlay{position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:40; display:none;}
-.menu-btn{cursor:pointer; font-size:20px; padding:5px; display:none;} /* Default hidden on desktop */
+.menu-btn{cursor:pointer; font-size:24px; padding:5px; display:none;}
 
-/* --- Views: Home Grid --- */
-.home-container{max-width:900px; margin:0 auto; width:100%; animation: fadeIn 0.3s ease;}
-.hero-title{font-size:28px; font-weight:800; margin-bottom:24px; text-align:center; color:#1e293b;}
+/* Content Views */
+.home-container{max-width:900px; margin:0 auto; width:100%; animation:fadeIn 0.3s ease;}
 .grid-main{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:30px;}
 .grid-sub{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:12px;}
 
-.subject-card{
-  background:#fff; border-radius:var(--radius); padding:24px; cursor:pointer;
-  border:1px solid var(--border); transition:0.2s; display:flex; flex-direction:column; align-items:center; text-align:center;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
-.subject-card:hover{transform:translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);}
-.icon-box{width:50px; height:50px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:12px; color:#fff;}
-.subj-title{font-size:18px; font-weight:700;}
-.subj-desc{font-size:13px; color:#64748b; margin-top:4px;}
+.subject-card{background:#fff; border-radius:var(--radius); padding:20px; cursor:pointer; border:1px solid var(--border); transition:0.2s; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);}
+.subject-card:hover{transform:translateY(-4px); box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);}
+.icon-box{width:45px; height:45px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:10px; color:#fff;}
 
-/* --- Views: Category List --- */
 .cat-header{display:flex; align-items:center; gap:10px; margin-bottom:20px;}
-.back-btn{padding:6px 16px; border-radius:20px; border:1px solid #ccc; background:#fff; cursor:pointer; font-size:13px; display:flex; align-items:center; gap:4px;}
-.back-btn:hover{background:#f1f5f9;}
-.topic-grid{display:grid; grid-template-columns:1fr; gap:12px; animation: fadeIn 0.3s ease;}
-.topic-btn{
-  background:#fff; padding:16px; border-radius:8px; border:1px solid var(--border); cursor:pointer;
-  display:flex; justify-content:space-between; align-items:center; transition:0.2s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-}
+.back-btn{padding:6px 14px; border-radius:20px; border:1px solid #ccc; background:#fff; cursor:pointer; font-size:13px;}
+.topic-grid{display:grid; grid-template-columns:1fr; gap:12px; animation:fadeIn 0.3s ease;}
+.topic-btn{background:#fff; padding:16px; border-radius:8px; border:1px solid var(--border); cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:0.2s; box-shadow:0 2px 4px rgba(0,0,0,0.02);}
 .topic-btn:hover{border-color:var(--text); background:#f8fafc;}
-.topic-title{font-weight:700; font-size:16px; color:var(--text);}
-.topic-tags{font-size:12px; color:#64748b; margin-top:4px;}
 
-/* --- Views: Content Detail --- */
-.detail-view{max-width:800px; margin:0 auto; background:#fff; padding:30px; border-radius:var(--radius); border:1px solid var(--border); animation: slideUp 0.3s ease;}
-.detail-title{font-size:28px; font-weight:800; margin-bottom:10px; color:var(--text);}
-.badge{padding:4px 8px; border-radius:4px; font-size:12px; font-weight:700; color:#fff; display:inline-block; margin-right:4px;}
+.detail-view{max-width:800px; margin:0 auto; background:#fff; padding:30px; border-radius:var(--radius); border:1px solid var(--border); animation:slideUp 0.3s ease;}
+.detail-title{font-size:26px; font-weight:800; margin-bottom:10px; color:var(--text);}
+.badge{padding:3px 8px; border-radius:4px; font-size:12px; font-weight:700; color:#fff; display:inline-block; margin-right:4px;}
 
-/* Content Styling */
+/* Typography inside details */
 .section-title{font-size:18px; font-weight:700; margin:24px 0 12px 0; border-bottom:2px solid #f1f5f9; padding-bottom:8px; color:var(--text);}
 table{width:100%; border-collapse:collapse; margin-bottom:15px; font-size:15px;}
-th{background:#f8fafc; padding:10px; text-align:left; color:#475569; font-weight:700; border-bottom:2px solid #e2e8f0;}
+th{background:#f8fafc; padding:10px; text-align:left; color:#475569; border-bottom:2px solid #e2e8f0;}
 td{border-bottom:1px solid #f1f5f9; padding:10px;}
-tr:last-child td{border-bottom:none;}
-
-.red-flag{background:#fef2f2; border-left:4px solid #ef4444; padding:15px; margin:15px 0; color:#991b1b; border-radius:0 4px 4px 0;}
-.exam-tip{background:#fffbeb; border-left:4px solid #f59e0b; padding:15px; margin:15px 0; color:#92400e; border-radius:0 4px 4px 0;}
-.concept-box{background:#eff6ff; border:1px solid #dbeafe; padding:15px; border-radius:6px; margin:15px 0; color:#1e3a8a;}
+.red-flag{background:#fef2f2; border-left:4px solid #ef4444; padding:12px; margin:15px 0; color:#991b1b; font-size:14px;}
+.exam-tip{background:#fffbeb; border-left:4px solid #f59e0b; padding:12px; margin:15px 0; color:#92400e; font-size:14px;}
+.concept-box{background:#eff6ff; border:1px solid #dbeafe; padding:12px; border-radius:6px; margin:15px 0; color:#1e3a8a; font-size:14px;}
 ul, ol{padding-left:20px; line-height:1.7;}
-li{margin-bottom:6px;}
 
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes slideUp { from { transform:translateY(10px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
 
-/* Mobile Responsive */
-@media(max-width: 900px){
+@media(max-width:900px){
   .sidebar{position:fixed; left:-100%; height:100%; box-shadow:4px 0 20px rgba(0,0,0,0.2);}
   .sidebar.open{left:0;}
   .menu-overlay.open{display:block;}
@@ -116,10 +74,7 @@ li{margin-bottom:6px;}
   .topic-grid{grid-template-columns:1fr;}
   .detail-view{padding:20px; border:none;}
 }
-@media(min-width: 901px){
-  .topic-grid{grid-template-columns:1fr 1fr;}
-  .menu-btn{display:none;} /* Hide hamburger on desktop */
-}
+@media(min-width:901px){.topic-grid{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -127,170 +82,238 @@ li{margin-bottom:6px;}
 <div class="menu-overlay" onclick="closeSidebar()"></div>
 
 <div class="app-container">
-  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">PT 國考資料庫</div>
     <div class="nav-scroll">
-      <div class="nav-item" onclick="renderHome()">🏠 回首頁 (Home)</div>
-      
+      <div class="nav-item" onclick="renderHome()">🏠 回首頁</div>
       <div class="nav-section">四大主科</div>
       <div class="nav-item" onclick="renderCategory('ortho')"><span style="color:var(--ortho)">🦴</span> 骨科物理治療</div>
       <div class="nav-item" onclick="renderCategory('neuro')"><span style="color:var(--neuro)">🧠</span> 神經物理治療</div>
       <div class="nav-item" onclick="renderCategory('cardio')"><span style="color:var(--cardio)">🫀</span> 心肺物理治療</div>
       <div class="nav-item" onclick="renderCategory('peds')"><span style="color:var(--peds)">👶</span> 小兒物理治療</div>
-      
       <div class="nav-section">進階科目</div>
-      <div class="nav-item" onclick="renderCategory('modality')"><span style="color:var(--modality)">⚡</span> 儀器與物理因子</div>
+      <div class="nav-item" onclick="renderCategory('modality')"><span style="color:var(--modality)">⚡</span> 儀器與因子</div>
       <div class="nav-item" onclick="renderCategory('assistive')"><span style="color:var(--assistive)">🦽</span> 輔具與科技</div>
       <div class="nav-item" onclick="renderCategory('biomech')"><span style="color:var(--biomech)">🚶</span> 生物力學</div>
     </div>
   </aside>
 
-  <!-- Main Area -->
   <main class="main">
     <div class="header-bar">
       <div style="display:flex; align-items:center; gap:10px;">
         <div class="menu-btn" onclick="toggleSidebar()">☰</div>
-        <div style="font-weight:700; color:var(--text);">PT National Exam Hub</div>
+        <div style="font-weight:700; color:var(--text);">PT Exam Hub</div>
       </div>
-      <button class="back-btn" onclick="toggleTheme()">◐ 模式</button>
     </div>
-    <div class="content-area" id="mainContent">
-      <!-- Content Loaded Here -->
-    </div>
+    <div class="content-area" id="mainContent"></div>
   </main>
 </div>
 
 <script>
-// ===========================================
-//  資料庫核心 (Database Core)
-// ===========================================
+// ============================================
+//   資料庫內容 (Database)
+// ============================================
 const database = [
   // --- 骨科 (Magee Complete) ---
-  { id: 'magee-cervical', cat: 'ortho', title: 'Magee: 頸椎特殊測試', tags: ['VBI', '上頸椎', '神經根'], content: `
-    <div class="exam-tip">💡 Magee 重點：上頸椎不穩是絕對禁忌症，治療前必測！</div>
-    <div class="section-title">1. 上頸椎不穩定 (Upper C-Spine)</div>
-    <table><tr><th>測試</th><th>構造</th><th>陽性</th></tr><tr><td>Sharp-Purser</td><td>橫韌帶</td><td>C2 後滑/症狀減輕</td></tr><tr><td>Alar Ligament</td><td>翼狀韌帶</td><td>側彎時 C2 沒動</td></tr></table>
-    <div class="section-title">2. 椎基底動脈 (VBI)</div>
-    <p><b>5D3N:</b> Dizziness, Diplopia, Dysphagia, Drop attack, Dysarthria + Nystagmus, Nausea, Numbness.</p>
-    <div class="section-title">3. 神經根 (Radiculopathy)</div>
-    <table><tr><th>測試</th><th>動作</th></tr><tr><td>Spurling's</td><td>側彎下壓 (痛)</td></tr><tr><td>Distraction</td><td>上提 (減緩)</td></tr><tr><td>Bakody's</td><td>手放頭上 (C4-5 減緩)</td></tr></table>
-  `},
-  { id: 'magee-shoulder', cat: 'ortho', title: 'Magee: 肩關節特殊測試', tags: ['夾擠', 'RCT', 'SLAP'], content: `
-    <div class="section-title">1. 夾擠 (Impingement)</div>
-    <ul><li><b>Neer's:</b> 被動屈曲到底。</li><li><b>Hawkins-Kennedy:</b> 屈曲90度+內轉。</li><li><b>Painful Arc:</b> 60-120度疼痛。</li></ul>
-    <div class="section-title">2. 旋轉肌袖 (Rotator Cuff)</div>
-    <table><tr><th>肌肉</th><th>測試</th></tr><tr><td>Supraspinatus</td><td>Empty Can / Drop Arm</td></tr><tr><td>Infraspinatus</td><td>ER Lag Sign</td></tr><tr><td>Subscapularis</td><td>Lift-off / Belly Press</td></tr></table>
-    <div class="section-title">3. 關節唇 (SLAP)</div>
-    <p><b>O'Brien's:</b> 內轉痛 > 外轉痛。 <b>Speed's:</b> 抗阻屈曲痛。</p>
-  `},
-  { id: 'magee-elbow', cat: 'ortho', title: 'Magee: 肘關節特殊測試', tags: ['網球肘', '韌帶'], content: `
-    <div class="section-title">1. 上髁炎</div>
-    <ul><li><b>Cozen's:</b> 抗阻 Wrist Ext (網球肘)。</li><li><b>Golfer's:</b> 被動 Wrist Ext + Supination (高爾夫球肘)。</li></ul>
-    <div class="section-title">2. 韌帶</div>
-    <p><b>Valgus Stress:</b> MCL (投手)。 <b>Varus Stress:</b> LCL。</p>
-  `},
-  { id: 'magee-wrist', cat: 'ortho', title: 'Magee: 腕手特殊測試', tags: ['CTS', '媽媽手'], content: `
-    <div class="section-title">常見病變</div>
-    <table><tr><th>病症</th><th>測試</th><th>動作</th></tr><tr><td>腕隧道</td><td>Phalen's</td><td>屈腕1分鐘</td></tr><tr><td>媽媽手</td><td>Finkelstein</td><td>握拳尺偏</td></tr><tr><td>TFCC</td><td>TFCC Load</td><td>擠壓尺偏旋轉</td></tr><tr><td>尺神經</td><td>Froment's</td><td>捏紙拇指屈曲</td></tr></table>
-  `},
-  { id: 'magee-lumbar', cat: 'ortho', title: 'Magee: 腰椎與骨盆', tags: ['HIVD', 'SIJ Cluster'], content: `
-    <div class="section-title">1. 神經張力</div>
-    <ul><li><b>SLR:</b> 35-70度痛 (坐骨神經)。</li><li><b>Slump:</b> 駝背踢腿 (硬脊膜)。</li><li><b>Femoral N.:</b> 趴姿屈膝 (股神經)。</li></ul>
-    <div class="section-title">2. SIJ Laslett Cluster (3/5 陽性)</div>
-    <ol><li>Distraction</li><li>Compression</li><li>Thigh Thrust (P4)</li><li>Sacral Thrust</li><li>Gaenslen's</li></ol>
-  `},
-  { id: 'magee-hip', cat: 'ortho', title: 'Magee: 髖關節特殊測試', tags: ['Thomas', 'Ober'], content: `
-    <div class="section-title">攣縮測試</div>
-    <table><tr><th>測試</th><th>肌肉</th></tr><tr><td>Thomas</td><td>Iliopsoas/Rectus</td></tr><tr><td>Ober's</td><td>IT Band</td></tr><tr><td>Ely's</td><td>Rectus Femoris</td></tr></table>
-    <div class="section-title">關節內</div>
-    <p><b>FABER:</b> 腹股溝痛=Hip，後側痛=SIJ。 <b>Scour:</b> 研磨測 OA/Labrum。</p>
-  `},
-  { id: 'magee-knee', cat: 'ortho', title: 'Magee: 膝關節特殊測試', tags: ['ACL', 'Meniscus'], content: `
-    <div class="concept-box">ACL 黃金標準：Lachman Test。</div>
-    <div class="section-title">1. 韌帶</div>
-    <ul><li><b>ACL:</b> Lachman, Anterior Drawer, Pivot Shift。</li><li><b>PCL:</b> Posterior Sag (Godfrey)。</li><li><b>MCL/LCL:</b> Valgus / Varus Stress。</li></ul>
-    <div class="section-title">2. 半月板</div>
-    <p><b>McMurray:</b> 旋轉伸直。 <b>Thessaly:</b> 單腳站旋轉。 <b>Apley's:</b> 趴姿研磨。</p>
-  `},
-  { id: 'magee-ankle', cat: 'ortho', title: 'Magee: 踝足特殊測試', tags: ['ATFL', 'Achilles'], content: `
-    <div class="section-title">韌帶扭傷</div>
-    <table><tr><th>韌帶</th><th>測試</th></tr><tr><td>ATFL</td><td>Ant. Drawer</td></tr><tr><td>CFL</td><td>Talar Tilt (Inv)</td></tr><tr><td>Syndesmosis</td><td>Kleiger's (ER)</td></tr></table>
-    <div class="section-title">其他</div>
-    <p><b>Thompson:</b> 阿基里斯腱斷裂。 <b>Homan's:</b> DVT。</p>
-  `},
+  {
+    id: 'magee-assess', cat: 'ortho', title: 'Magee: 基礎評估觀念', tags: ['Capsular', 'End-feel'],
+    content: `
+      <div class="section-title">關節囊受限模式 (Capsular Patterns)</div>
+      <div class="exam-tip">💡 國考必背順序 (最受限 -> 次受限)</div>
+      <table>
+        <tr><th>關節</th><th>受限順序</th></tr>
+        <tr><td><b>肩 (Glenohumeral)</b></td><td>ER > Abd > IR</td></tr>
+        <tr><td><b>髖 (Hip)</b></td><td>Flex > Abd > IR (或 IR>Ext>Abd)</td></tr>
+        <tr><td>膝 (Knee)</td><td>Flex > Ext</td></tr>
+        <tr><td>踝 (Talocrural)</td><td>PF > DF</td></tr>
+      </table>
+      <div class="section-title">終端感覺 (End-Feels)</div>
+      <ul>
+        <li><b>Bone-to-bone (Hard):</b> 肘伸直。</li>
+        <li><b>Tissue stretch (Firm):</b> 肩外轉。</li>
+        <li><b>Empty:</b> 痛到不敢動 (急性發炎)。</li>
+        <li><b>Springy block:</b> 半月板卡住。</li>
+      </ul>
+    `
+  },
+  {
+    id: 'magee-neuro-exam', cat: 'ortho', title: 'Magee: 神經學檢查', tags: ['Dermatome', 'Myotome'],
+    content: `
+      <div class="section-title">上肢關鍵皮節與肌節</div>
+      <table>
+        <tr><th>節數</th><th>感覺 (Sensory)</th><th>肌肉 (Motor)</th><th>反射</th></tr>
+        <tr><td>C5</td><td>上臂外側</td><td>Deltoid</td><td>Biceps</td></tr>
+        <tr><td>C6</td><td>大拇指</td><td>Wrist Ext</td><td>Brachioradialis</td></tr>
+        <tr><td>C7</td><td>中指</td><td>Triceps</td><td>Triceps</td></tr>
+        <tr><td>C8</td><td>小指</td><td>Finger Flex</td><td>-</td></tr>
+      </table>
+      <div class="section-title">下肢關鍵皮節與肌節</div>
+      <table>
+        <tr><th>節數</th><th>感覺</th><th>肌肉</th><th>反射</th></tr>
+        <tr><td>L4</td><td>內踝</td><td>Tibialis Ant.</td><td>Patella</td></tr>
+        <tr><td>L5</td><td>足背/大拇趾</td><td>EHL (翹拇指)</td><td>-</td></tr>
+        <tr><td>S1</td><td>外踝</td><td>Gastroc (墊腳)</td><td>Achilles</td></tr>
+      </table>
+    `
+  },
+  {
+    id: 'magee-spine', cat: 'ortho', title: 'Magee: 脊椎特殊測試', tags: ['C-spine', 'Lumbar'],
+    content: `
+      <div class="red-flag"><b>VBI Test:</b> 測試椎基底動脈。伸展+旋轉到底，出現 5D3N 為陽性 (暈眩、複視、眼震)。</div>
+      <div class="section-title">頸椎測試</div>
+      <ul>
+        <li><b>Sharp-Purser:</b> 測橫韌帶 (C1-C2 不穩)。</li>
+        <li><b>Spurling's:</b> 側彎加壓 -> 神經根痛。</li>
+        <li><b>Distraction:</b> 上提頭部 -> 神經痛減輕。</li>
+      </ul>
+      <div class="section-title">腰椎測試</div>
+      <ul>
+        <li><b>SLR:</b> 35-70度放射痛 (坐骨神經)。</li>
+        <li><b>Slump:</b> 駝背踢腿勾腳 (硬脊膜張力)。</li>
+        <li><b>Stork (單腳站後仰):</b> 脊椎滑脫/解離。</li>
+      </ul>
+    `
+  },
+  {
+    id: 'magee-shoulder', cat: 'ortho', title: 'Magee: 肩關節特殊測試', tags: ['Impingement', 'RCT'],
+    content: `
+      <div class="section-title">1. 夾擠 (Impingement)</div>
+      <table><tr><th>測試</th><th>動作</th></tr><tr><td>Neer's</td><td>被動屈曲到底</td></tr><tr><td>Hawkins-Kennedy</td><td>屈曲90 + 內轉</td></tr><tr><td>Painful Arc</td><td>60-120度疼痛</td></tr></table>
+      <div class="section-title">2. 旋轉肌袖 (Rotator Cuff)</div>
+      <ul>
+        <li><b>Empty Can:</b> Supraspinatus (倒可樂姿勢)。</li>
+        <li><b>Drop Arm:</b> 手臂無法緩慢放下 (斷裂)。</li>
+        <li><b>Lift-off:</b> 手背離背 (Subscapularis)。</li>
+      </ul>
+      <div class="section-title">3. 關節唇 (SLAP)</div>
+      <p><b>O'Brien's:</b> 內轉痛 > 外轉痛。</p>
+    `
+  },
+  {
+    id: 'magee-knee', cat: 'ortho', title: 'Magee: 膝關節特殊測試', tags: ['ACL', 'Meniscus'],
+    content: `
+      <div class="concept-box">ACL 黃金標準：Lachman Test (屈膝30度)。</div>
+      <div class="section-title">韌帶不穩</div>
+      <ul>
+        <li><b>ACL:</b> Lachman, Anterior Drawer, Pivot Shift (旋轉)。</li>
+        <li><b>PCL:</b> Posterior Sag (脛骨下陷)。</li>
+        <li><b>MCL:</b> Valgus Stress (外翻)。</li>
+      </ul>
+      <div class="section-title">半月板</div>
+      <ul>
+        <li><b>McMurray:</b> 旋轉+伸直 (內轉測外側)。</li>
+        <li><b>Thessaly:</b> 單腳站立旋轉 (準確度高)。</li>
+      </ul>
+    `
+  },
+  {
+    id: 'magee-hip', cat: 'ortho', title: 'Magee: 髖關節與 SIJ', tags: ['Thomas', 'Laslett'],
+    content: `
+      <div class="section-title">攣縮測試</div>
+      <ul>
+        <li><b>Thomas:</b> 測髂腰肌 (大腿離床) / 股直肌 (小腿翹)。</li>
+        <li><b>Ober's:</b> 側躺測 IT Band 緊繃。</li>
+      </ul>
+      <div class="section-title">SIJ Laslett Cluster (3/5 陽性)</div>
+      <p>1.Distraction 2.Compression 3.Thigh Thrust 4.Sacral Thrust 5.Gaenslen's</p>
+    `
+  },
 
   // --- 神經 ---
-  { id: 'neuro-stroke', cat: 'neuro', title: '腦中風 Brunnstrom 分期', tags: ['CVA', 'Synergy'], content: `
-    <div class="section-title">Brunnstrom Recovery Stages</div>
-    <table><tr><th>Stage</th><th>特徵</th></tr><tr><td>I</td><td>軟癱 (Flaccidity)</td></tr><tr><td>II</td><td>聯合反應，Synergy 微現</td></tr><tr><td>III</td><td>張力最強，可隨意 Synergy</td></tr><tr><td>IV</td><td>打破協同，部分分離</td></tr><tr><td>V</td><td>分離動作，張力下降</td></tr><tr><td>VI</td><td>接近正常</td></tr></table>
-    <div class="concept-box"><b>上肢 Flexor Synergy:</b> Scapula elevation/retraction, Shoulder Abd/ER, Elbow Flex, Supination.</div>
-  `},
-  { id: 'neuro-sci', cat: 'neuro', title: '脊髓損傷 (SCI) 症候群', tags: ['ASIA', 'Autonomic'], content: `
-    <div class="section-title">不完全損傷</div>
-    <table><tr><th>症候群</th><th>特徵</th></tr><tr><td>Central Cord</td><td>上肢嚴重 > 下肢 (走路像殭屍)</td></tr><tr><td>Brown-Sequard</td><td>同側本體喪失 / 對側痛溫喪失</td></tr><tr><td>Anterior Cord</td><td>運動喪失 / 本體感覺保留</td></tr></table>
-    <div class="red-flag"><b>Autonomic Dysreflexia (自主神經反射異常):</b><br>T6 以上損傷，血壓急升、頭痛、盜汗。<b>處置：立刻坐起 (姿勢性降壓)。</b></div>
-  `},
+  {
+    id: 'neuro-stroke', cat: 'neuro', title: '腦中風 Brunnstrom', tags: ['CVA', 'Synergy'],
+    content: `
+      <div class="section-title">Brunnstrom 分期</div>
+      <table><tr><th>Stage</th><th>特徵</th></tr><tr><td>I</td><td>軟癱</td></tr><tr><td>II</td><td>Synergy 出現</td></tr><tr><td>III</td><td>張力最強</td></tr><tr><td>IV</td><td>打破協同，部分分離</td></tr><tr><td>V</td><td>分離動作</td></tr><tr><td>VI</td><td>接近正常</td></tr></table>
+      <div class="concept-box"><b>上肢屈肌協同:</b> Scapula retract, Shoulder Abd/ER, Elbow Flex, Supination.</div>
+    `
+  },
+  {
+    id: 'neuro-sci', cat: 'neuro', title: '脊髓損傷 (SCI)', tags: ['ASIA', '症候群'],
+    content: `
+      <div class="section-title">不完全損傷</div>
+      <ul>
+        <li><b>Central Cord:</b> 上肢嚴重 > 下肢 (走路像殭屍)。</li>
+        <li><b>Brown-Sequard:</b> 同側本體喪失 / 對側痛溫喪失。</li>
+      </ul>
+      <div class="red-flag"><b>Autonomic Dysreflexia (自主神經反射異常):</b><br>T6 以上損傷，血壓飆高、頭痛。處置：<b>立刻坐起</b>，檢查尿管。</div>
+    `
+  },
 
   // --- 心肺 ---
-  { id: 'cardio-ekg', cat: 'cardio', title: '心電圖判讀與 ACLS', tags: ['EKG', 'Arrhythmia'], content: `
-    <div class="red-flag"><b>PT 必知致命心律 (Stop Treatment):</b><br>1. VF (心室顫動)<br>2. VT (心室頻脈) 無脈搏<br>3. Asystole (一直線)</div>
-    <div class="section-title">波形意義</div>
-    <ul><li><b>P wave:</b> 心房去極化 (Afib 時消失)。</li><li><b>QRS:</b> 心室去極化 (寬大代表 PVC)。</li><li><b>T wave:</b> 心室再極化 (高尖=高血鉀)。</li></ul>
-  `},
-  { id: 'cardio-rehab', cat: 'cardio', title: '心臟復健 Phase I', tags: ['METs', 'Inpatient'], content: `
-    <div class="section-title">住院期 (Phase I)</div>
-    <ul>
-      <li><b>目標:</b> 早期活動，衛教，避免臥床。</li>
-      <li><b>強度:</b> RPE < 13，HR < Resting + 20 (MI) / 30 (Surgery)。</li>
-    </ul>
-    <div class="concept-box"><b>METs 對照:</b><br>1-2: 吃飯、穿衣。<br>3-4: 平地行走、淋浴。<br>5-6: 性行為、慢跑。</div>
-  `},
+  {
+    id: 'cardio-ekg', cat: 'cardio', title: '心電圖與 ACLS', tags: ['EKG', 'Arrhythmia'],
+    content: `
+      <div class="red-flag"><b>PT 必知致命心律 (Stop):</b><br>1. VF (顫動)<br>2. VT (頻脈) 無脈搏<br>3. Asystole (一直線)</div>
+      <div class="section-title">波形意義</div>
+      <p>P波: 心房去極化 / QRS: 心室去極化 / T波: 心室再極化 (高尖=高血鉀)。</p>
+    `
+  },
+  {
+    id: 'cardio-rehab', cat: 'cardio', title: '心臟復健 Phase I', tags: ['METs', '住院期'],
+    content: `
+      <div class="section-title">Phase I 住院期</div>
+      <ul>
+        <li>目標: 早期活動，避免臥床，衛教。</li>
+        <li>強度: RPE < 13，HR < Resting + 20。</li>
+      </ul>
+      <div class="concept-box"><b>METs:</b><br>1-2: 吃飯穿衣<br>3-4: 平地行走<br>5-6: 慢跑性行為</div>
+    `
+  },
 
   // --- 小兒 ---
-  { id: 'peds-dev', cat: 'peds', title: '兒童發展里程碑', tags: ['Milestone', 'Reflex'], content: `
-    <div class="exam-tip">口訣：頭 -> 頸 -> 軀幹 -> 四肢</div>
-    <table><tr><th>月齡</th><th>能力</th></tr><tr><td>4m</td><td>翻身 (Roll over)</td></tr><tr><td>6m</td><td>獨立坐 (Sit)</td></tr><tr><td>8m</td><td>腹爬 (Commando crawl)</td></tr><tr><td>10m</td><td>四點爬 (Creeping)</td></tr><tr><td>12m</td><td>放手走 (Walk)</td></tr></table>
-  `},
-  { id: 'peds-cp', cat: 'peds', title: '腦性麻痺 GMFCS 分級', tags: ['CP', 'GMFCS'], content: `
-    <div class="section-title">GMFCS (6-12歲)</div>
-    <ul>
-      <li><b>Level I:</b> 跑跳自如，不需扶手。</li>
-      <li><b>Level II:</b> 戶外長距離需輔具，走樓梯需扶手。</li>
-      <li><b>Level III:</b> 室內需手持輔具，戶外輪椅。</li>
-      <li><b>Level IV:</b> 電動輪椅 (可操作)。</li>
-      <li><b>Level V:</b> 完全依賴。</li>
-    </ul>
-  `},
+  {
+    id: 'peds-dev', cat: 'peds', title: '兒童發展里程碑', tags: ['Milestone'],
+    content: `
+      <div class="exam-tip">口訣：頭 -> 頸 -> 軀幹 -> 四肢</div>
+      <table><tr><th>月齡</th><th>能力</th></tr><tr><td>4m</td><td>翻身 (Roll)</td></tr><tr><td>6m</td><td>獨立坐 (Sit)</td></tr><tr><td>8m</td><td>腹爬</td></tr><tr><td>10m</td><td>四點爬 (Creep)</td></tr><tr><td>12m</td><td>放手走</td></tr></table>
+    `
+  },
+  {
+    id: 'peds-cp', cat: 'peds', title: '腦性麻痺 GMFCS', tags: ['CP', '分級'],
+    content: `
+      <div class="section-title">GMFCS (6-12歲)</div>
+      <ul>
+        <li><b>L1:</b> 跑跳自如。</li>
+        <li><b>L2:</b> 走樓梯需扶手，戶外需輔具。</li>
+        <li><b>L3:</b> 室內需助行器，戶外輪椅。</li>
+        <li><b>L4:</b> 大多靠輪椅 (可操作)。</li>
+        <li><b>L5:</b> 完全依賴。</li>
+      </ul>
+    `
+  },
 
-  // --- 儀器 ---
-  { id: 'mod-tens', cat: 'modality', title: '電療參數 TENS', tags: ['止痛', 'Gate Control'], content: `
-    <div class="section-title">TENS 模式比較</div>
-    <table><tr><th>模式</th><th>頻率</th><th>機轉</th></tr><tr><td>高頻 (Conventional)</td><td>80-120Hz</td><td>Gate Control (快產快消)</td></tr><tr><td>低頻 (Acupuncture)</td><td>1-10Hz</td><td>Opiate (慢產慢消)</td></tr><tr><td>Brief Intense</td><td>高頻</td><td>阻斷 (清創用)</td></tr></table>
-  `},
-
-  // --- 輔具 ---
-  { id: 'at-wheel', cat: 'assistive', title: '輪椅測量與適配', tags: ['Wheelchair', '壓瘡'], content: `
-    <div class="red-flag">測量錯誤後果嚴重！</div>
-    <table><tr><th>部位</th><th>測量</th><th>錯誤後果</th></tr><tr><td>寬度</td><td>臀寬 + 2吋</td><td>窄: 壓大轉子 / 寬: 脊椎側彎</td></tr><tr><td>深度</td><td>臀後至膕窩 - 2吋</td><td>深: 壓膕窩 / 淺: 壓力集中坐骨</td></tr><tr><td>扶手高</td><td>肘屈90 + 1吋</td><td>高: 聳肩 / 低: 傾斜</td></tr></table>
-  `},
-
-  // --- 生物力學 ---
-  { id: 'bio-gait', cat: 'biomech', title: '異常步態分析', tags: ['Trendelenburg', 'Gait'], content: `
-    <div class="section-title">常見異常</div>
-    <ul>
-      <li><b>Trendelenburg:</b> 臀中肌無力，骨盆掉向健側，身歪向患側。</li>
-      <li><b>Gluteus Maximus:</b> 腳跟著地身體後仰 (Rocking horse)。</li>
-      <li><b>Quadriceps:</b> 身體前傾手壓大腿。</li>
-      <li><b>Steppage:</b> 垂足 (Drop foot)。</li>
-      <li><b>Scissoring:</b> 剪刀腳 (張力強)。</li>
-    </ul>
-  `}
+  // --- 進階 ---
+  {
+    id: 'mod-electro', cat: 'modality', title: '電療參數 TENS', tags: ['止痛'],
+    content: `
+      <div class="section-title">TENS 模式</div>
+      <table><tr><th>模式</th><th>頻率</th><th>機轉</th></tr><tr><td>高頻 (Conventional)</td><td>80-120Hz</td><td>Gate Control (快產快消)</td></tr><tr><td>低頻 (Acupuncture)</td><td>1-10Hz</td><td>Opiate (慢產慢消)</td></tr></table>
+    `
+  },
+  {
+    id: 'at-wheel', cat: 'assistive', title: '輪椅測量', tags: ['Fit', '壓瘡'],
+    content: `
+      <div class="red-flag">量錯後果：壓瘡、神經壓迫。</div>
+      <p><b>寬度:</b> 臀寬 + 2吋。<br><b>深度:</b> 臀後至膕窩 - 2吋。<br><b>扶手高:</b> 肘屈90 + 1吋。</p>
+    `
+  },
+  {
+    id: 'bio-gait', cat: 'biomech', title: '異常步態分析', tags: ['Gait'],
+    content: `
+      <div class="section-title">常見異常</div>
+      <ul>
+        <li><b>Trendelenburg:</b> 臀中肌無力，骨盆掉向健側。</li>
+        <li><b>Gluteus Maximus:</b> 腳跟著地後仰 (Rocking horse)。</li>
+        <li><b>Steppage:</b> 垂足 (Drop foot)。</li>
+      </ul>
+    `
+  }
 ];
 
-// ===========================================
-//  邏輯控制 (Application Logic)
-// ===========================================
+// ============================================
+//   邏輯控制 (Logic)
+// ============================================
 const mainArea = document.getElementById('mainContent');
 const sidebar = document.getElementById('sidebar');
 const menuOverlay = document.querySelector('.menu-overlay');
@@ -309,108 +332,58 @@ function renderHome() {
   mainArea.innerHTML = `
     <div class="home-container">
       <div class="hero-title">PT 國考全攻略資料庫</div>
-      
-      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:12px;">四大主科 (Main Subjects)</div>
+      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:12px;">四大主科</div>
       <div class="grid-main">
-        ${createCard('ortho')}
-        ${createCard('neuro')}
-        ${createCard('cardio')}
-        ${createCard('peds')}
+        ${createCard('ortho')} ${createCard('neuro')}
+        ${createCard('cardio')} ${createCard('peds')}
       </div>
-
-      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:12px;">進階科目 (Advanced)</div>
+      <div style="font-size:14px; font-weight:700; color:#94a3b8; margin-bottom:12px;">進階科目</div>
       <div class="grid-sub">
-        ${createCard('modality', true)}
-        ${createCard('assistive', true)}
-        ${createCard('biomech', true)}
+        ${createCard('modality', true)} ${createCard('assistive', true)} ${createCard('biomech', true)}
       </div>
     </div>
   `;
   closeSidebar();
-  window.scrollTo(0, 0);
 }
 
 function createCard(key, isSub = false) {
   const c = categories[key];
-  if(isSub) {
-    return `
-      <div class="subject-card" onclick="renderCategory('${key}')" style="border-top:4px solid ${c.color}; padding:16px;">
-        <div style="font-size:24px;">${c.icon}</div>
-        <div style="font-weight:700; margin-top:8px; font-size:15px; color:#334155;">${c.name.split(' ')[0]}</div>
-      </div>
-    `;
-  }
-  return `
-    <div class="subject-card" onclick="renderCategory('${key}')" style="border-top:5px solid ${c.color}">
-      <div class="icon-box" style="background:${c.color}">${c.icon}</div>
-      <div class="subj-title" style="color:${c.color}">${c.name.split(' ')[0]}</div>
-      <div class="subj-desc">${c.name.split(' ')[1] || '物理治療'}</div>
-    </div>
-  `;
+  if(isSub) return `<div class="subject-card" onclick="renderCategory('${key}')" style="border-top:4px solid ${c.color}; padding:16px;"><div style="font-size:24px;">${c.icon}</div><div style="font-weight:700; margin-top:8px; font-size:15px; color:#334155;">${c.name.split(' ')[0]}</div></div>`;
+  return `<div class="subject-card" onclick="renderCategory('${key}')" style="border-top:5px solid ${c.color}"><div class="icon-box" style="background:${c.color}">${c.icon}</div><div class="subj-title" style="color:${c.color}">${c.name.split(' ')[0]}</div><div class="subj-desc">${c.name.split(' ')[1]||''}</div></div>`;
 }
 
 function renderCategory(catKey) {
-  const cat = categories[catKey];
+  const c = categories[catKey];
   const items = database.filter(d => d.cat === catKey);
-
-  let gridHtml = items.map(item => `
-    <div class="topic-btn" onclick="renderContent('${item.id}')">
-      <div>
-        <div class="topic-title">${item.title}</div>
-        <div class="topic-tags">${item.tags.join(' • ')}</div>
-      </div>
+  const gridHtml = items.length ? items.map(d => `
+    <div class="topic-btn" onclick="renderContent('${d.id}')">
+      <div><div class="topic-title">${d.title}</div><div class="topic-tags">${d.tags.join(' • ')}</div></div>
       <div style="color:#cbd5e1">➔</div>
-    </div>
-  `).join('');
-
-  if(items.length === 0) gridHtml = `<div style="text-align:center; color:#94a3b8; padding:40px;">此分類資料庫擴充中...</div>`;
-
+    </div>`).join('') : `<div style="text-align:center;color:#94a3b8;padding:40px;">資料擴充中...</div>`;
+  
   mainArea.innerHTML = `
-    <div class="cat-header">
-      <button class="back-btn" onclick="renderHome()">← 回首頁</button>
-      <h2 style="margin:0; color:${cat.color}; font-size:20px;">${cat.icon} ${cat.name}</h2>
-    </div>
-    <div class="topic-grid">
-      ${gridHtml}
-    </div>
-  `;
+    <div class="cat-header"><button class="back-btn" onclick="renderHome()">← 回首頁</button><h2 style="margin:0;color:${c.color};font-size:20px;">${c.icon} ${c.name}</h2></div>
+    <div class="topic-grid">${gridHtml}</div>`;
   closeSidebar();
-  window.scrollTo(0, 0);
 }
 
 function renderContent(id) {
-  const data = database.find(d => d.id === id);
-  const cat = categories[data.cat];
-  const tagsHtml = data.tags.map(t => `<span class="badge" style="background:${cat.color}">${t}</span>`).join('');
-
+  const d = database.find(x => x.id === id);
+  const c = categories[d.cat];
   mainArea.innerHTML = `
-    <div class="cat-header">
-      <button class="back-btn" onclick="renderCategory('${data.cat}')">← 回列表</button>
-    </div>
+    <div class="cat-header"><button class="back-btn" onclick="renderCategory('${d.cat}')">← 回列表</button></div>
     <div class="detail-view">
-      <h1 class="detail-title">${data.title}</h1>
-      <div style="margin-bottom:24px;">${tagsHtml}</div>
-      <div class="detail-body">
-        ${data.content}
-      </div>
-    </div>
-  `;
-  window.scrollTo(0, 0);
+      <h1 class="detail-title">${d.title}</h1>
+      <div style="margin-bottom:24px;">${d.tags.map(t=>`<span class="badge" style="background:${c.color}">${t}</span>`).join('')}</div>
+      <div>${d.content}</div>
+    </div>`;
 }
 
-function toggleSidebar() {
-  sidebar.classList.toggle('open');
-  menuOverlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
-}
+function toggleSidebar(){ sidebar.classList.toggle('open'); menuOverlay.style.display=sidebar.classList.contains('open')?'block':'none'; }
+function closeSidebar(){ sidebar.classList.remove('open'); menuOverlay.style.display='none'; }
 
-function closeSidebar() {
-  sidebar.classList.remove('open');
-  menuOverlay.style.display = 'none';
-}
-
-function toggleTheme() {
-  const b = document.body;
-  if(b.style.backgroundColor === 'rgb(30, 41, 59)') { // Simple check for dark
-     b.style.backgroundColor = '#f8fafc';
-     b.style.color = '#334155';
-  } els
+// Init
+renderHome();
+</script>
+</body>
+</html>
